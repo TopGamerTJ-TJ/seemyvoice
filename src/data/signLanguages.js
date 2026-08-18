@@ -6,6 +6,8 @@ export const SIGN_LANGUAGES = [
   { id: "asl", name: "American Sign Language", shortName: "ASL", source: "SignASL.org" },
   { id: "bsl", name: "British Sign Language", shortName: "BSL", source: "SignBSL.com" },
   { id: "auslan", name: "Australian Sign Language", shortName: "Auslan", source: "Auslan Signbank" },
+  { id: "lsf", name: "French Sign Language", shortName: "LSF", source: "Spreadthesign.com" },
+  { id: "dgs", name: "German Sign Language", shortName: "DGS", source: "Spreadthesign.com" },
 ];
 
 export function getSignLanguage(id) {
