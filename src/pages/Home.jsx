@@ -8,6 +8,7 @@ import { SettingsProvider, useSettings } from "@/components/SettingsContext";
 import { translateToASL } from "@/utils/localTranslator";
 import { useSiteStats } from "@/hooks/useSiteStats";
 import SiteFooter from "@/components/SiteFooter";
+import SiteLanguageSelector from "@/components/SiteLanguageSelector";
 
 /**
  * Home — the main screen for SL Now.
@@ -76,6 +77,9 @@ function HomeContent() {
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
+      <div className="absolute top-4 left-4 z-40">
+        <SiteLanguageSelector />
+      </div>
       <SettingsPanel />
 
       {appState === "countdown" && (
