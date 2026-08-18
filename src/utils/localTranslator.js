@@ -184,18 +184,19 @@ export function translateToASL(text, options = {}) {
         const item = signItem(signId);
         if (item) signSequence.push(item);
       } else {
-        // Try fingerspelling fallback
-        if (fingerspellingFallback) {
-          const fs = fingerspellWord(word);
-          if (fs && fs.length > 0) {
-            signSequence.push(...fs);
-            usedFingerspelling = true;
-          } else {
-            unmatchedWords.push(word);
-          }
-        } else {
-          unmatchedWords.push(word);
-        }
+        // Try a whole-word ASL video lookup (SignASL.org) before fingerspelling.
+        // If no video is found, fall back to letter-by-letter fingerspelling
+        // at render time.
+        signSequence.push({
+          signId: `VL-${word}`,
+          gloss: word.charAt(0).toUpperCase() + word.slice(1),
+          asset: { type: "video_lookup", label: word },
+          duration: 2000,
+          fingerspelled: false,
+          word,
+          videoLookup: true,
+          allowFingerspellingFallback: fingerspellingFallback,
+        });
       }
     }
   }

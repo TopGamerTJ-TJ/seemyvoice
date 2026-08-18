@@ -26,6 +26,8 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
   const currentVideoUrl = videoUrls[currentIndex];
   const hasVideo = Boolean(currentVideoUrl) && !currentSign?.fingerspelled;
   const videoLoading = currentVideoUrl === undefined && !currentSign?.fingerspelled;
+  const isFsFallback = currentSign?.videoLookup && currentVideoUrl === null && currentSign?.allowFingerspellingFallback;
+  const isNoVideo = currentSign?.videoLookup && currentVideoUrl === null && !currentSign?.allowFingerspellingFallback;
 
   const clearTimer = useCallback(() => {
     if (timeoutRef.current) {
@@ -53,7 +55,14 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
     if (hasVideo) return; // video's onEnded handles advancement
     if (videoLoading) return; // wait for video URL to resolve
 
-    const duration = currentSign.duration / speed;
+    let duration;
+    if (isFsFallback) {
+      duration = (800 * currentSign.word.length) / speed;
+    } else if (isNoVideo) {
+      duration = 1500 / speed;
+    } else {
+      duration = currentSign.duration / speed;
+    }
     timeoutRef.current = setTimeout(() => {
       if (!isLast) {
         advance();
@@ -62,7 +71,7 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
       }
     }, duration);
     return clearTimer;
-  }, [isPlaying, currentIndex, currentSign, speed, isLast, advance, clearTimer, hasVideo, videoLoading]);
+  }, [isPlaying, currentIndex, currentSign, speed, isLast, advance, clearTimer, hasVideo, videoLoading, isFsFallback, isNoVideo]);
 
   const handleVideoEnded = useCallback(() => {
     if (!isLast) {
