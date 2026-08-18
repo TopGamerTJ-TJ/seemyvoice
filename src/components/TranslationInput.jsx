@@ -12,6 +12,10 @@ const EXAMPLE_PHRASES = [
   "Where is the bathroom?",
   "What time is it?",
   "I love you",
+  "Nice to meet you",
+  "Can you help me?",
+  "I am learning ASL",
+  "Where are you from?",
 ];
 
 /**
