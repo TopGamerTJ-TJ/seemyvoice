@@ -5,6 +5,8 @@ import TranslationResult from "@/components/TranslationResult";
 import SettingsPanel from "@/components/SettingsPanel";
 import { SettingsProvider, useSettings } from "@/components/SettingsContext";
 import { translateToASL } from "@/utils/localTranslator";
+import { useSiteStats } from "@/hooks/useSiteStats";
+import SiteFooter from "@/components/SiteFooter";
 
 /**
  * Home — the main screen for ASL Translate.
@@ -13,6 +15,7 @@ import { translateToASL } from "@/utils/localTranslator";
  */
 function HomeContent() {
   const { settings } = useSettings();
+  const { stats, trackTranslation } = useSiteStats();
   const [text, setText] = useState("");
   const [appState, setAppState] = useState("idle"); // idle | countdown | result
   const [result, setResult] = useState(null);
@@ -28,7 +31,9 @@ function HomeContent() {
     });
     setResult(translation);
     setAppState("result");
-  }, [text, settings.fingerspellingFallback]);
+    const wordCount = text.trim().split(/\s+/).filter(Boolean).length;
+    trackTranslation(wordCount);
+  }, [text, settings.fingerspellingFallback, trackTranslation]);
 
   const handleNewTranslation = useCallback(() => {
     setResult(null);
@@ -36,14 +41,14 @@ function HomeContent() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
       <SettingsPanel />
 
       {appState === "countdown" && (
         <CountdownOverlay onComplete={handleCountdownComplete} />
       )}
 
-      <main className="min-h-screen flex flex-col">
+      <main className="flex-1 flex flex-col">
         {appState === "idle" && (
           <div className="flex-1 flex flex-col items-center justify-center px-4 py-12">
             <TranslationInput
@@ -64,6 +69,7 @@ function HomeContent() {
           </div>
         )}
       </main>
+      <SiteFooter stats={stats} />
     </div>
   );
 }

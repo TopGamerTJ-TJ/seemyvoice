@@ -1,0 +1,23 @@
+{
+  "name": "SiteStats",
+  "type": "object",
+  "properties": {
+    "stat_key": {
+      "type": "string",
+      "description": "Lookup key for the stats record (e.g. 'global')"
+    },
+    "total_words": {
+      "type": "number",
+      "default": 0,
+      "description": "Running count of words translated across all users"
+    },
+    "total_visitors": {
+      "type": "number",
+      "default": 0,
+      "description": "Running count of unique visitors"
+    }
+  },
+  "required": [
+    "stat_key"
+  ]
+}
