@@ -11,7 +11,7 @@ import { useSettings } from "@/components/SettingsContext";
  *   onNewTranslation — callback for "Translate Something Else"
  */
 export default function SigningPlayer({ signSequence, onNewTranslation }) {
-  const { settings } = useSettings();
+  const { settings, updateSetting } = useSettings();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const timeoutRef = useRef(null);
@@ -37,18 +37,19 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
     });
   }, [signSequence.length]);
 
-  // Auto-advance timer
+  // Auto-advance timer — let each sign play its full duration, then advance
+  // or stop after the last sign.
   useEffect(() => {
     clearTimer();
-    if (isPlaying && currentSign && !isLast) {
-      const duration = currentSign.duration / speed;
-      timeoutRef.current = setTimeout(() => {
+    if (!isPlaying || !currentSign) return;
+    const duration = currentSign.duration / speed;
+    timeoutRef.current = setTimeout(() => {
+      if (!isLast) {
         advance();
-      }, duration);
-    } else if (isPlaying && isLast) {
-      // Finished the last sign
-      setIsPlaying(false);
-    }
+      } else {
+        setIsPlaying(false);
+      }
+    }, duration);
     return clearTimer;
   }, [isPlaying, currentIndex, currentSign, speed, isLast, advance, clearTimer]);
 
@@ -160,7 +161,7 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
           {[0.5, 0.75, 1, 1.25].map((s) => (
             <button
               key={s}
-              onClick={() => settings.updateSetting("signingSpeed", s)}
+              onClick={() => updateSetting("signingSpeed", s)}
               aria-pressed={speed === s}
               className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
                 speed === s
