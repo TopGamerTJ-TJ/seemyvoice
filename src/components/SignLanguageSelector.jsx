@@ -30,8 +30,11 @@ export default function SignLanguageSelector() {
           </button>
         ))}
       </div>
+      <p className="text-sm font-medium text-foreground/80">
+        {SIGN_LANGUAGES.find((l) => l.id === current)?.name}
+      </p>
       <p className="text-xs text-muted-foreground/70">
-        {SIGN_LANGUAGES.find((l) => l.id === current)?.source}
+        Source: {SIGN_LANGUAGES.find((l) => l.id === current)?.source}
       </p>
     </div>
   );

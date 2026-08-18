@@ -12,6 +12,8 @@
  *   auslan — Auslan Signbank (single fetch)
  *   lsf    — Spreadthesign.com / French Sign Language (two-step: search + word page)
  *   dgs    — Spreadthesign.com / German Sign Language (two-step)
+ *   lse    — Spreadthesign.com / Spanish Sign Language (two-step)
+ *   lis    — Spreadthesign.com / Italian Sign Language (two-step)
  */
 export default async function(req) {
   try {
@@ -36,6 +38,8 @@ export default async function(req) {
     const SPREADTHESIGN_LANGS = {
       lsf: "fr.fr",  // French Sign Language (LSF)
       dgs: "de.de",  // German Sign Language (DGS)
+      lse: "es.es",  // Spanish Sign Language (LSE)
+      lis: "it.it",  // Italian Sign Language (LIS)
     };
 
     const targetLang = SPREADTHESIGN_LANGS[signLanguage];
