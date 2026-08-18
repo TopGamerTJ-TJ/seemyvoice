@@ -10,6 +10,7 @@ import { useSiteStats } from "@/hooks/useSiteStats";
 import SiteFooter from "@/components/SiteFooter";
 import SiteLanguageSelector from "@/components/SiteLanguageSelector";
 import HomeShowcase from "@/components/HomeShowcase";
+import PersonalStory from "@/components/PersonalStory";
 import { I18nProvider, useI18n } from "@/components/I18nContext";
 
 /**
@@ -104,6 +105,7 @@ function HomeContent() {
               onTranslate={handleTranslate}
               disabled={appState !== "idle"}
             />
+            <PersonalStory />
             <HomeShowcase stats={stats} />
           </div>
         )}
