@@ -2,6 +2,7 @@ import React from "react";
 import { AlertCircle, Info } from "lucide-react";
 import SigningPlayer from "@/components/SigningPlayer";
 import { useSettings } from "@/components/SettingsContext";
+import { getSignLanguage } from "@/data/signLanguages";
 
 /**
  * TranslationResult — displays the ASL translation output.
@@ -15,7 +16,8 @@ import { useSettings } from "@/components/SettingsContext";
  */
 export default function TranslationResult({ result, onNewTranslation }) {
   const { settings } = useSettings();
-  const { originalText, signSequence, unmatchedWords, usedFingerspelling, status } = result;
+  const { originalText, translatedText, sourceLanguage, wasTranslated, signSequence, unmatchedWords, usedFingerspelling, status } = result;
+  const langInfo = getSignLanguage(settings.signLanguage || "asl");
 
   // Error: no signs found at all
   if (status === "no_signs" || signSequence.length === 0) {
@@ -48,11 +50,25 @@ export default function TranslationResult({ result, onNewTranslation }) {
       {/* Header */}
       <div className="text-center mb-8">
         <h1 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
-          ASL Translation
+          {langInfo.name} Translation
         </h1>
-        <p className="text-muted-foreground mt-2 italic">
-          "{originalText}"
-        </p>
+        {wasTranslated ? (
+          <>
+            <p className="text-sm text-muted-foreground mt-2">
+              Translated from {sourceLanguage}
+            </p>
+            <p className="text-muted-foreground mt-1 italic">
+              "{originalText}"
+            </p>
+            <p className="text-foreground mt-2 font-medium">
+              → "{translatedText}"
+            </p>
+          </>
+        ) : (
+          <p className="text-muted-foreground mt-2 italic">
+            "{originalText}"
+          </p>
+        )}
       </div>
 
       {/* Signing player */}

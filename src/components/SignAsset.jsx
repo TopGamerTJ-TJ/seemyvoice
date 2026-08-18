@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import AnimatedHand from "@/components/AnimatedHand";
 import { getMotion } from "@/data/signMotions";
 import { useSettings } from "@/components/SettingsContext";
+import { getSignLanguage } from "@/data/signLanguages";
 
 /**
  * SignAsset — renders a single sign's visual.
@@ -11,8 +12,9 @@ import { useSettings } from "@/components/SettingsContext";
  *   2. For video-lookup signs with no video: letter-by-letter fingerspelling
  *   3. Stylized AnimatedHand fallback (dictionary signs, loading state)
  */
-export default function SignAsset({ sign, active, videoUrl, speed = 1, onVideoEnded }) {
+export default function SignAsset({ sign, active, videoUrl, speed = 1, signLanguage = "asl", onVideoEnded }) {
   const { settings } = useSettings();
+  const langInfo = getSignLanguage(signLanguage);
   const videoRef = useRef(null);
 
   const isFingerspelled = sign.fingerspelled;
@@ -79,7 +81,7 @@ export default function SignAsset({ sign, active, videoUrl, speed = 1, onVideoEn
         </div>
         <div className="mt-3 inline-flex items-center gap-2 text-[11px] text-muted-foreground/70 bg-muted px-3 py-1.5 rounded-full">
           <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-          Real ASL video — SignASL.org
+          Real {langInfo.shortName} video — {langInfo.source}
         </div>
       </div>
     );

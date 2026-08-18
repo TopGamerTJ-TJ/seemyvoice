@@ -10,6 +10,7 @@ const defaultSettings = {
   darkMode: false,
   showGloss: true,
   fingerspellingFallback: true,
+  signLanguage: "asl",     // "asl" | "bsl"
 };
 
 export function SettingsProvider({ children }) {

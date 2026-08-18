@@ -18,11 +18,12 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
   const timeoutRef = useRef(null);
 
   const speed = settings.signingSpeed;
+  const signLanguage = settings.signLanguage || "asl";
   const currentSign = signSequence[currentIndex];
   const isLast = currentIndex >= signSequence.length - 1;
 
   // Fetch real ASL video URLs for all signs in parallel
-  const videoUrls = useSignVideos(signSequence);
+  const videoUrls = useSignVideos(signSequence, signLanguage);
   const currentVideoUrl = videoUrls[currentIndex];
   const hasVideo = Boolean(currentVideoUrl) && !currentSign?.fingerspelled;
   const videoLoading = currentVideoUrl === undefined && !currentSign?.fingerspelled;
@@ -128,6 +129,7 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
           active={isPlaying}
           videoUrl={currentVideoUrl}
           speed={speed}
+          signLanguage={signLanguage}
           onVideoEnded={handleVideoEnded}
         />
 

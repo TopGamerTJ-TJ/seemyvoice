@@ -1,4 +1,7 @@
 import React from "react";
+import SignLanguageSelector from "@/components/SignLanguageSelector";
+import { useSettings } from "@/components/SettingsContext";
+import { getSignLanguage } from "@/data/signLanguages";
 
 const MAX_LENGTH = 20000;
 
@@ -13,24 +16,36 @@ const EXAMPLE_PHRASES = [
   "I love you",
   "Nice to meet you",
   "Can you help me?",
-  "I am learning ASL",
   "Where are you from?",
+  "Привіт",  // Ukrainian
+  "Hola",    // Spanish
+  "Bonjour", // French
 ];
 
 /**
  * TranslationInput — the text input interface on the home screen.
+ * Accepts text in any language; the selected sign language determines
+ * which video dictionary is used for playback.
  */
 export default function TranslationInput({ text, setText, onTranslate, disabled }) {
+  const { settings } = useSettings();
+  const langInfo = getSignLanguage(settings.signLanguage || "asl");
+
   return (
     <div className="w-full max-w-2xl mx-auto">
       {/* Logo / Title */}
-      <div className="text-center mb-10">
+      <div className="text-center mb-6">
         <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight mb-3">
-          ASL Translate
+          Sign Translate
         </h1>
         <p className="text-lg sm:text-xl text-muted-foreground">
-          Type English. See it in American Sign Language.
+          Type in any language. See it in sign language.
         </p>
+      </div>
+
+      {/* Sign language selector */}
+      <div className="mb-6">
+        <SignLanguageSelector />
       </div>
 
       {/* Text box */}
@@ -43,9 +58,9 @@ export default function TranslationInput({ text, setText, onTranslate, disabled 
               if (!disabled && text.trim()) onTranslate();
             }
           }}
-          placeholder="Type something you want to sign..."
+          placeholder="Type something you want to sign... (any language)"
           maxLength={MAX_LENGTH}
-          aria-label="English text to translate to ASL"
+          aria-label="Text to translate to sign language"
           className="w-full min-h-[140px] sm:min-h-[160px] p-5 sm:p-6 text-lg rounded-3xl border border-border bg-card text-card-foreground placeholder:text-muted-foreground/60 resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all shadow-sm"
         />
         <div className="absolute bottom-4 right-5 text-sm text-muted-foreground tabular-nums">
@@ -57,10 +72,10 @@ export default function TranslationInput({ text, setText, onTranslate, disabled 
       <button
         onClick={onTranslate}
         disabled={disabled || !text.trim()}
-        aria-label="Translate to ASL"
+        aria-label={`Translate to ${langInfo.name}`}
         className="w-full mt-5 py-4 sm:py-5 rounded-2xl bg-primary text-primary-foreground text-lg font-semibold hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-lg shadow-primary/10 active:scale-[0.99]"
       >
-        Translate to ASL →
+        Translate to {langInfo.shortName} →
       </button>
 
       {/* Example phrases */}

@@ -2,13 +2,14 @@ import { useState, useEffect, useRef } from "react";
 import { base44 } from "@/api/base44Client";
 
 /**
- * useSignVideos — fetches real ASL video URLs for each sign in a sequence
- * by calling the getSignVideoUrl backend function (SignASL.org).
+ * useSignVideos — fetches real sign language video URLs for each sign
+ * in a sequence by calling the getSignVideoUrl backend function.
  *
- * Results are cached in a module-level Map so repeated translations
- * of the same words don't re-fetch.
+ * Results are cached in a module-level Map keyed by `${signLanguage}:${word}`
+ * so repeated translations of the same words don't re-fetch.
  *
  * @param {Array} signSequence — array of sign items (each has .word)
+ * @param {string} signLanguage — "asl" | "bsl"
  * @returns {Object} map of index → videoUrl (string | null | undefined)
  *   - undefined: still loading
  *   - string: video URL ready
@@ -16,7 +17,7 @@ import { base44 } from "@/api/base44Client";
  */
 const videoCache = new Map();
 
-export function useSignVideos(signSequence) {
+export function useSignVideos(signSequence, signLanguage = "asl") {
   const [videoUrls, setVideoUrls] = useState({});
   const seqRef = useRef(signSequence);
 
@@ -33,10 +34,11 @@ export function useSignVideos(signSequence) {
 
     for (let i = 0; i < signSequence.length; i++) {
       const word = signSequence[i].word;
-      if (videoCache.has(word)) {
-        initial[i] = videoCache.get(word);
+      const cacheKey = `${signLanguage}:${word}`;
+      if (videoCache.has(cacheKey)) {
+        initial[i] = videoCache.get(cacheKey);
       } else {
-        toFetch.push({ index: i, word });
+        toFetch.push({ index: i, word, cacheKey });
       }
     }
 
@@ -45,14 +47,14 @@ export function useSignVideos(signSequence) {
     if (toFetch.length === 0) return;
 
     Promise.all(
-      toFetch.map(async ({ index, word }) => {
+      toFetch.map(async ({ index, word, cacheKey }) => {
         try {
-          const resp = await base44.functions.invoke("getSignVideoUrl", { word });
+          const resp = await base44.functions.invoke("getSignVideoUrl", { word, signLanguage });
           const url = resp.data?.videoUrl ?? null;
-          videoCache.set(word, url);
+          videoCache.set(cacheKey, url);
           return { index, url };
         } catch (e) {
-          videoCache.set(word, null);
+          videoCache.set(cacheKey, null);
           return { index, url: null };
         }
       })
@@ -70,7 +72,7 @@ export function useSignVideos(signSequence) {
     return () => {
       cancelled = true;
     };
-  }, [signSequence]);
+  }, [signSequence, signLanguage]);
 
   return videoUrls;
 }
