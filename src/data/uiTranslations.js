@@ -60,6 +60,7 @@ const en = {
   wordsTranslated: "words translated",
   users: "users",
   peopleWhoSign: "people who sign",
+  speakersNote: "Approximate signer counts based on published estimates (Ethnologue & Wikipedia). Figures vary by source.",
   terms: "Terms",
   privacy: "Privacy",
   preparing: "Preparing your translation...",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BookOpen,
   Languages,
@@ -7,6 +7,7 @@ import {
   Globe,
   Play,
   Sparkles,
+  ChevronDown,
 } from "lucide-react";
 import { useI18n } from "@/components/I18nContext";
 import { SIGN_LANGUAGES } from "@/data/signLanguages";
@@ -26,11 +27,15 @@ export default function HomeShowcase({ stats }) {
       : totalSigners >= 1_000
       ? `${Math.round(totalSigners / 1_000)}K`
       : `${totalSigners}`;
+  const [showBreakdown, setShowBreakdown] = useState(false);
+  const sortedSignLangs = [...SIGN_LANGUAGES]
+    .filter((l) => (l.speakers || 0) > 0)
+    .sort((a, b) => (b.speakers || 0) - (a.speakers || 0));
 
   const statCards = [
     { value: words, label: t("wordsTranslated"), icon: BookOpen, gradient: "from-sky-500 to-cyan-500" },
     { value: langCount, label: t("languagesSupported"), icon: Languages, gradient: "from-cyan-500 to-emerald-500" },
-    { value: signersDisplay, label: t("peopleWhoSign"), icon: Users, gradient: "from-violet-400 to-sky-400" },
+    { value: signersDisplay, label: t("peopleWhoSign"), icon: Users, gradient: "from-violet-400 to-sky-400", id: "signers" },
   ];
 
   const steps = [
@@ -56,10 +61,14 @@ export default function HomeShowcase({ stats }) {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {statCards.map((s) => {
             const Icon = s.icon;
+            const isSigners = s.id === "signers";
+            const CardTag = isSigners ? "button" : "div";
             return (
-              <div
+              <CardTag
                 key={s.label}
-                className="group relative rounded-3xl border border-border/60 bg-card p-6 text-center shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5"
+                type={isSigners ? "button" : undefined}
+                onClick={isSigners ? () => setShowBreakdown((v) => !v) : undefined}
+                className={`group relative w-full rounded-3xl border border-border/60 bg-card p-6 text-center shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 ${isSigners ? "cursor-pointer" : ""}`}
               >
                 <div className={`mx-auto mb-4 inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br ${s.gradient} shadow-lg`}>
                   <Icon className="w-6 h-6 text-white" />
@@ -68,10 +77,36 @@ export default function HomeShowcase({ stats }) {
                   {s.value}
                 </div>
                 <div className="mt-1 text-sm text-muted-foreground">{s.label}</div>
-              </div>
+                {isSigners && (
+                  <span className="mt-2 inline-flex items-center gap-1 text-xs text-muted-foreground">
+                    <span>{showBreakdown ? t("showLess") : t("showMore")}</span>
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showBreakdown ? "rotate-180" : ""}`} />
+                  </span>
+                )}
+              </CardTag>
             );
           })}
         </div>
+        {showBreakdown && (
+          <div className="mt-6 rounded-3xl border border-border/60 bg-card p-6 shadow-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-1">
+              {sortedSignLangs.map((l) => (
+                <div key={l.id} className="flex items-center justify-between py-1.5 border-b border-border/40 last:border-0">
+                  <span className="text-sm text-foreground truncate pr-2">
+                    <span className="font-semibold">{l.shortName}</span>
+                    <span className="text-muted-foreground"> · {l.name}</span>
+                  </span>
+                  <span className="text-sm font-semibold text-foreground tabular-nums whitespace-nowrap">
+                    {(l.speakers || 0).toLocaleString()}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <p className="mt-4 text-xs text-muted-foreground text-center">
+              {t("speakersNote")}
+            </p>
+          </div>
+        )}
       </section>
 
       {/* About */}

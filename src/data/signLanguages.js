@@ -2,18 +2,18 @@
  * Sign languages supported by SL Now.
  * Each entry maps to a video dictionary source used by getSignVideoUrl.
  * `speakers` is an approximate count of people who use/understand that
- * sign language (commonly cited estimates), used for aggregate stats.
+ * sign language, based on published estimates (Ethnologue & Wikipedia).
  */
 export const SIGN_LANGUAGES = [
-  { id: "asl", name: "American Sign Language", shortName: "ASL", source: "SignASL.org", speakers: 500000 },
+  { id: "asl", name: "American Sign Language", shortName: "ASL", source: "SignASL.org", speakers: 459850 },
   { id: "bsl", name: "British Sign Language", shortName: "BSL", source: "SignBSL.com", speakers: 151000 },
-  { id: "auslan", name: "Australian Sign Language", shortName: "Auslan", source: "Auslan Signbank", speakers: 20000 },
+  { id: "auslan", name: "Australian Sign Language", shortName: "Auslan", source: "Auslan Signbank", speakers: 10000 },
   { id: "lsf", name: "French Sign Language", shortName: "LSF", source: "Spreadthesign.com", speakers: 100000 },
   { id: "dgs", name: "German Sign Language", shortName: "DGS", source: "Spreadthesign.com", speakers: 80000 },
-  { id: "lse", name: "Spanish Sign Language", shortName: "LSE", source: "Spreadthesign.com", speakers: 100000 },
+  { id: "lse", name: "Spanish Sign Language", shortName: "LSE", source: "Spreadthesign.com", speakers: 523000 },
   { id: "lis", name: "Italian Sign Language", shortName: "LIS", source: "Spreadthesign.com", speakers: 70000 },
-  { id: "jsl", name: "Japanese Sign Language", shortName: "JSL", source: "Spreadthesign.com", speakers: 60000 },
-  { id: "csl", name: "Chinese Sign Language", shortName: "CSL", source: "Spreadthesign.com", speakers: 20000000 },
+  { id: "jsl", name: "Japanese Sign Language", shortName: "JSL", source: "Spreadthesign.com", speakers: 126000 },
+  { id: "csl", name: "Chinese Sign Language", shortName: "CSL", source: "Spreadthesign.com", speakers: 4000000 },
   { id: "lgp", name: "Portuguese Sign Language", shortName: "LGP", source: "Spreadthesign.com", speakers: 60000 },
   { id: "ssl", name: "Swedish Sign Language", shortName: "SSL", source: "Spreadthesign.com", speakers: 8000 },
   { id: "pjm", name: "Polish Sign Language", shortName: "PJM", source: "Spreadthesign.com", speakers: 50000 },
@@ -32,7 +32,7 @@ export const SIGN_LANGUAGES = [
   { id: "lsa", name: "Argentine Sign Language", shortName: "LSA", source: "Spreadthesign.com", speakers: 500000 },
   { id: "lsch", name: "Chilean Sign Language", shortName: "LSCH", source: "Spreadthesign.com", speakers: 100000 },
   { id: "ogs", name: "Austrian Sign Language", shortName: "ÖGS", source: "Spreadthesign.com", speakers: 10000 },
-  { id: "psl", name: "Urdu Sign Language", shortName: "PSL", source: "Spreadthesign.com", speakers: 7000000 },
+  { id: "psl", name: "Urdu Sign Language", shortName: "PSL", source: "Spreadthesign.com", speakers: 1000000 },
   { id: "intl", name: "International Sign", shortName: "Intl", source: "Spreadthesign.com", speakers: 0 },
 ];
 
