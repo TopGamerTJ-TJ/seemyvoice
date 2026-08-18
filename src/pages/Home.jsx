@@ -88,9 +88,9 @@ function HomeContent() {
         <CountdownOverlay onComplete={handleCountdownComplete} />
       )}
 
-      <main className="flex-1 flex flex-col">
+      <main className="flex-1 flex flex-col pt-10">
         {appState === "idle" && (
-          <div className="flex-1 flex flex-col items-center justify-center px-4 py-12">
+          <div className="flex-1 flex flex-col items-center justify-center px-4 py-10">
             <TranslationInput
               text={text}
               setText={setText}
