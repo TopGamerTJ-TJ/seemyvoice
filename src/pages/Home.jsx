@@ -9,6 +9,7 @@ import { translateToASL } from "@/utils/localTranslator";
 import { useSiteStats } from "@/hooks/useSiteStats";
 import SiteFooter from "@/components/SiteFooter";
 import SiteLanguageSelector from "@/components/SiteLanguageSelector";
+import HomeShowcase from "@/components/HomeShowcase";
 import { I18nProvider, useI18n } from "@/components/I18nContext";
 
 /**
@@ -78,7 +79,13 @@ function HomeContent() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
+    <div className="relative min-h-screen bg-background text-foreground flex flex-col overflow-hidden">
+      {/* Decorative gradient backdrop */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -left-32 w-[520px] h-[520px] rounded-full bg-gradient-to-br from-indigo-300/30 to-violet-300/10 blur-3xl" />
+        <div className="absolute top-24 -right-40 w-[520px] h-[520px] rounded-full bg-gradient-to-br from-fuchsia-300/25 to-cyan-300/10 blur-3xl" />
+        <div className="absolute bottom-0 left-1/3 w-[420px] h-[420px] rounded-full bg-gradient-to-br from-amber-200/25 to-emerald-200/10 blur-3xl" />
+      </div>
       <div className="absolute top-4 left-4 z-40">
         <SiteLanguageSelector />
       </div>
@@ -88,15 +95,16 @@ function HomeContent() {
         <CountdownOverlay onComplete={handleCountdownComplete} />
       )}
 
-      <main className="flex-1 flex flex-col pt-10">
+      <main className="relative z-10 flex-1 flex flex-col pt-10">
         {appState === "idle" && (
-          <div className="flex-1 flex flex-col items-center justify-center px-4 py-10">
+          <div className="flex-1 flex flex-col items-center px-4 pt-6 pb-16">
             <TranslationInput
               text={text}
               setText={setText}
               onTranslate={handleTranslate}
               disabled={appState !== "idle"}
             />
+            <HomeShowcase stats={stats} />
           </div>
         )}
 

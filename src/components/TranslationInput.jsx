@@ -1,4 +1,5 @@
 import React from "react";
+import { Hand } from "lucide-react";
 import SignLanguageSelector from "@/components/SignLanguageSelector";
 import { useSettings } from "@/components/SettingsContext";
 import { useI18n } from "@/components/I18nContext";
@@ -35,9 +36,14 @@ export default function TranslationInput({ text, setText, onTranslate, disabled 
     <div className="w-full max-w-2xl mx-auto">
       {/* Logo / Title */}
       <div className="text-center mb-6">
-        <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight mb-3">
-          SL Now
-        </h1>
+        <div className="flex items-center justify-center gap-3 mb-3">
+          <span className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 via-violet-500 to-fuchsia-500 shadow-lg shadow-violet-500/30">
+            <Hand className="w-6 h-6 text-white" />
+          </span>
+          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 bg-clip-text text-transparent">
+            SL Now
+          </h1>
+        </div>
         <p className="text-lg sm:text-xl text-muted-foreground">
           {t("tagline")}
         </p>
@@ -73,7 +79,7 @@ export default function TranslationInput({ text, setText, onTranslate, disabled 
         onClick={onTranslate}
         disabled={disabled || !text.trim()}
         aria-label={`${t("translateTo")} ${langInfo.name}`}
-        className="w-full mt-5 py-4 sm:py-5 rounded-2xl bg-primary text-primary-foreground text-lg font-semibold hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-lg shadow-primary/10 active:scale-[0.99]"
+        className="w-full mt-5 py-4 sm:py-5 rounded-2xl bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 text-white text-lg font-semibold hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-lg shadow-violet-500/30 active:scale-[0.99]"
       >
         {t("translateTo")} {langInfo.shortName} →
       </button>
@@ -88,7 +94,7 @@ export default function TranslationInput({ text, setText, onTranslate, disabled 
             <button
               key={phrase}
               onClick={() => setText(phrase)}
-              className="px-4 py-2 rounded-full bg-secondary text-secondary-foreground text-sm font-medium hover:bg-secondary/70 transition-colors border border-border/50"
+              className="px-4 py-2 rounded-full bg-secondary text-secondary-foreground text-sm font-medium hover:border-violet-400 hover:text-violet-600 transition-colors border border-border/50"
             >
               {phrase}
             </button>
