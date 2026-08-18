@@ -6,20 +6,18 @@ import { getSignLanguage } from "@/data/signLanguages";
 const MAX_LENGTH = 20000;
 
 const EXAMPLE_PHRASES = [
-  "Hello",
-  "Thank you",
-  "How are you?",
-  "What is your name?",
-  "My name is...",
-  "Where is the bathroom?",
-  "What time is it?",
-  "I love you",
-  "Nice to meet you",
-  "Can you help me?",
-  "Where are you from?",
-  "Привіт",  // Ukrainian
-  "Hola",    // Spanish
-  "Bonjour", // French
+  "Hello, how are you?",          // English
+  "Hola, ¿cómo estás?",           // Spanish
+  "Bonjour, comment ça va?",       // French
+  "Привіт, як справи?",            // Ukrainian
+  "Hallo, wie geht's?",            // German
+  "Ciao, come stai?",              // Italian
+  "Olá, como vai?",                // Portuguese
+  "你好，你好吗？",                  // Chinese
+  "こんにちは、お元気ですか？",        // Japanese
+  "안녕하세요, 어떻게 지내세요?",      // Korean
+  "مرحبا، كيف حالك؟",              // Arabic
+  "नमस्ते, आप कैसे हैं?",          // Hindi
 ];
 
 /**
