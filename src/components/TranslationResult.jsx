@@ -33,7 +33,7 @@ export default function TranslationResult({ result, onNewTranslation }) {
           You typed: <span className="font-medium text-foreground">"{originalText}"</span>
         </p>
         <p className="text-sm text-muted-foreground mb-8">
-          The local ASL sign library may not include these words yet.
+          The local sign library may not include these words yet.
         </p>
         <button
           onClick={onNewTranslation}
@@ -82,7 +82,7 @@ export default function TranslationResult({ result, onNewTranslation }) {
         <div className="mt-8 p-6 rounded-2xl bg-secondary/50 border border-border">
           <div className="flex items-center gap-2 mb-3">
             <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">
-              ASL reference
+              Sign reference
             </h3>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -116,8 +116,8 @@ export default function TranslationResult({ result, onNewTranslation }) {
             </div>
           )}
           <p className="text-xs text-muted-foreground mt-4 leading-relaxed">
-            This is a gloss reference for the sign sequence, not written ASL.
-            A gloss does not represent the full visual or grammatical content of ASL.
+            This is a gloss reference for the sign sequence, not written sign language.
+            A gloss does not represent the full visual or grammatical content of sign language.
           </p>
         </div>
       )}
@@ -137,7 +137,7 @@ export default function TranslationResult({ result, onNewTranslation }) {
       <div className="mt-4 flex items-start gap-3 p-4 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
         <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
         <p className="text-sm text-blue-800 dark:text-blue-200">
-          This translation uses the app's local ASL sign library. Signs shown as
+          This translation uses the app's local sign library. Signs shown as
           placeholders will be replaced with verified signing assets as they become available.
         </p>
       </div>

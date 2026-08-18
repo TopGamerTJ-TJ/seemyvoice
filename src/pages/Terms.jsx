@@ -5,14 +5,14 @@ export default function Terms() {
   return (
     <LegalLayout title="Terms of Service" lastUpdated="August 18, 2026">
       <p>
-        Welcome to ASL Translate. By using this application, you agree to these
+        Welcome to SL Now. By using this application, you agree to these
         Terms of Service. If you do not agree with any part of these terms,
         please do not use the app.
       </p>
 
       <h2 className="text-xl font-semibold mt-8 mb-3">1. Description of Service</h2>
       <p>
-        ASL Translate is a free tool that converts English text into American
+        SL Now is a free tool that converts English text into American
         Sign Language video animations. The service retrieves publicly available
         ASL demonstration videos from third-party sources (such as SignASL.org)
         and plays them back in sequence.

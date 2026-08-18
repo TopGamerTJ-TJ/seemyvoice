@@ -34,7 +34,7 @@ export default function TranslationInput({ text, setText, onTranslate, disabled 
       {/* Logo / Title */}
       <div className="text-center mb-6">
         <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight mb-3">
-          Sign Translate
+          SL Now
         </h1>
         <p className="text-lg sm:text-xl text-muted-foreground">
           Type in any language. See it in sign language.

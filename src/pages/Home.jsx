@@ -10,7 +10,7 @@ import { useSiteStats } from "@/hooks/useSiteStats";
 import SiteFooter from "@/components/SiteFooter";
 
 /**
- * Home — the main screen for Sign Translate.
+ * Home — the main screen for SL Now.
  *
  * Flow: idle → countdown → translating → ready/playing/paused
  * Text in any language is translated to English (via LLM), then

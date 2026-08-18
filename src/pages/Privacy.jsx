@@ -5,13 +5,13 @@ export default function Privacy() {
   return (
     <LegalLayout title="Privacy Policy" lastUpdated="August 18, 2026">
       <p>
-        This Privacy Policy describes how ASL Translate handles information when
+        This Privacy Policy describes how SL Now handles information when
         you use the application. We are committed to protecting your privacy.
       </p>
 
       <h2 className="text-xl font-semibold mt-8 mb-3">1. Information We Do Not Collect</h2>
       <p>
-        ASL Translate is designed with privacy in mind. We do not require you to
+        SL Now is designed with privacy in mind. We do not require you to
         create an account, and we do not collect personally identifiable
         information about you when you use the translation tool. The text you
         enter is processed locally in your browser to generate sign sequences.
@@ -42,7 +42,7 @@ export default function Privacy() {
 
       <h2 className="text-xl font-semibold mt-8 mb-3">5. Cookies</h2>
       <p>
-        ASL Translate does not use tracking cookies. Local storage is used
+        SL Now does not use tracking cookies. Local storage is used
         exclusively for saving your in-app preferences.
       </p>
 

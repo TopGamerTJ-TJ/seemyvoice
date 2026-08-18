@@ -134,7 +134,7 @@ export default function SignAsset({ sign, active, videoUrl, speed = 1, signLangu
         </div>
         <div className="mt-3 inline-flex items-center gap-2 text-[11px] text-muted-foreground/70 bg-muted px-3 py-1.5 rounded-full">
           <span className={`w-1.5 h-1.5 rounded-full ${isDoubleLetter ? "bg-blue-500" : "bg-amber-500"}`} />
-          {isDoubleLetter ? "Double letter — repeat sign" : "No ASL video found — fingerspelling"}
+          {isDoubleLetter ? "Double letter — repeat sign" : "No sign video found — fingerspelling"}
         </div>
       </div>
     );
@@ -154,7 +154,7 @@ export default function SignAsset({ sign, active, videoUrl, speed = 1, signLangu
         </div>
         <div className="mt-3 inline-flex items-center gap-2 text-[11px] text-muted-foreground/70 bg-muted px-3 py-1.5 rounded-full">
           <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
-          No ASL video available
+          No sign video available
         </div>
       </div>
     );
@@ -193,7 +193,7 @@ export default function SignAsset({ sign, active, videoUrl, speed = 1, signLangu
 
       <div className="mt-3 inline-flex items-center gap-2 text-[11px] text-muted-foreground/70 bg-muted px-3 py-1.5 rounded-full">
         <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-        {isLoading ? "Loading ASL video…" : "Illustrative animation — sign video unavailable"}
+        {isLoading ? "Loading sign video…" : "Illustrative animation — sign video unavailable"}
       </div>
     </div>
   );
