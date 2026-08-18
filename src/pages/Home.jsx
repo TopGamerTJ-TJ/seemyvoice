@@ -82,9 +82,9 @@ function HomeContent() {
     <div className="relative min-h-screen bg-background text-foreground flex flex-col overflow-hidden">
       {/* Decorative gradient backdrop */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -left-32 w-[520px] h-[520px] rounded-full bg-gradient-to-br from-indigo-300/30 to-violet-300/10 blur-3xl" />
-        <div className="absolute top-24 -right-40 w-[520px] h-[520px] rounded-full bg-gradient-to-br from-fuchsia-300/25 to-cyan-300/10 blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 w-[420px] h-[420px] rounded-full bg-gradient-to-br from-amber-200/25 to-emerald-200/10 blur-3xl" />
+        <div className="absolute -top-40 -left-32 w-[520px] h-[520px] rounded-full bg-gradient-to-br from-sky-300/40 to-cyan-300/15 blur-3xl" />
+        <div className="absolute top-24 -right-40 w-[520px] h-[520px] rounded-full bg-gradient-to-br from-emerald-300/30 to-teal-300/10 blur-3xl" />
+        <div className="absolute bottom-0 left-1/3 w-[420px] h-[420px] rounded-full bg-gradient-to-br from-violet-300/25 to-sky-300/10 blur-3xl" />
       </div>
       <div className="absolute top-4 left-4 z-40">
         <SiteLanguageSelector />

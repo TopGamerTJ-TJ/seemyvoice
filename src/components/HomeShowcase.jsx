@@ -22,29 +22,29 @@ export default function HomeShowcase({ stats }) {
   const langCount = SIGN_LANGUAGES.length;
 
   const statCards = [
-    { value: words, label: t("wordsTranslated"), icon: BookOpen, gradient: "from-indigo-500 to-violet-500" },
-    { value: langCount, label: t("languagesSupported"), icon: Languages, gradient: "from-violet-500 to-fuchsia-500" },
-    { value: visitors, label: t("users"), icon: Users, gradient: "from-cyan-500 to-blue-500" },
+    { value: words, label: t("wordsTranslated"), icon: BookOpen, gradient: "from-sky-500 to-cyan-500" },
+    { value: langCount, label: t("languagesSupported"), icon: Languages, gradient: "from-cyan-500 to-emerald-500" },
+    { value: visitors, label: t("users"), icon: Users, gradient: "from-violet-400 to-sky-400" },
   ];
 
   const steps = [
-    { title: t("step1Title"), text: t("step1Text"), icon: Hand, gradient: "from-indigo-500 to-violet-500" },
-    { title: t("step2Title"), text: t("step2Text"), icon: Languages, gradient: "from-violet-500 to-fuchsia-500" },
-    { title: t("step3Title"), text: t("step3Text"), icon: Play, gradient: "from-fuchsia-500 to-pink-500" },
+    { title: t("step1Title"), text: t("step1Text"), icon: Hand, gradient: "from-sky-500 to-cyan-500" },
+    { title: t("step2Title"), text: t("step2Text"), icon: Languages, gradient: "from-cyan-500 to-emerald-500" },
+    { title: t("step3Title"), text: t("step3Text"), icon: Play, gradient: "from-emerald-500 to-teal-500" },
   ];
 
   const features = [
-    { title: t("feature1Title"), text: t("feature1Text"), icon: Languages, gradient: "from-indigo-500 to-violet-500" },
-    { title: t("feature2Title"), text: t("feature2Text"), icon: Play, gradient: "from-fuchsia-500 to-pink-500" },
-    { title: t("feature3Title"), text: t("feature3Text"), icon: Hand, gradient: "from-amber-500 to-orange-500" },
-    { title: t("feature4Title"), text: t("feature4Text"), icon: Globe, gradient: "from-cyan-500 to-emerald-500" },
+    { title: t("feature1Title"), text: t("feature1Text"), icon: Languages, gradient: "from-sky-500 to-cyan-500" },
+    { title: t("feature2Title"), text: t("feature2Text"), icon: Play, gradient: "from-cyan-500 to-emerald-500" },
+    { title: t("feature3Title"), text: t("feature3Text"), icon: Hand, gradient: "from-emerald-500 to-teal-500" },
+    { title: t("feature4Title"), text: t("feature4Text"), icon: Globe, gradient: "from-violet-400 to-sky-400" },
   ];
 
   return (
     <div className="w-full max-w-5xl mx-auto mt-20 space-y-20">
       {/* Live stats */}
       <section>
-        <p className="text-center text-xs font-bold uppercase tracking-[0.2em] bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 bg-clip-text text-transparent mb-6">
+        <p className="text-center text-xs font-bold uppercase tracking-[0.2em] bg-gradient-to-r from-sky-500 via-cyan-500 to-emerald-500 bg-clip-text text-transparent mb-6">
           {t("liveStats")}
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
