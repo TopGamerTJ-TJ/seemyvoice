@@ -113,6 +113,16 @@ export default function SettingsPanel() {
             checked={settings.fingerspellingFallback}
             onChange={() => toggleSetting("fingerspellingFallback")}
           />
+
+          {/* Share QR code */}
+          <div className="flex flex-col items-center gap-2 pt-2 border-t border-border">
+            <p className="text-sm font-semibold text-foreground">Share this website</p>
+            <img
+              src="https://media.base44.com/images/public/6a8483b77fdfab7f9666bf36/9b824c325_QR.svg"
+              alt="QR code to share this website"
+              className="w-40 h-40 rounded-xl bg-white p-2 border border-border"
+            />
+          </div>
         </div>
       </div>
     </>
