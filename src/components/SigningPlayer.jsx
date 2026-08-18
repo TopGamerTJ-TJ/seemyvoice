@@ -58,7 +58,12 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
 
     let duration;
     if (isFsFallback) {
-      duration = (800 * currentSign.word.length) / speed;
+      const word = currentSign.word;
+      let doubleCount = 0;
+      for (let i = 1; i < word.length; i++) {
+        if (word[i] === word[i - 1]) doubleCount++;
+      }
+      duration = (800 * word.length + 500 * doubleCount) / speed;
     } else if (isNoVideo) {
       duration = 1500 / speed;
     } else {

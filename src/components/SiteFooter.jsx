@@ -31,6 +31,11 @@ export default function SiteFooter({ stats }) {
           </Link>
         </div>
       </div>
+      <div className="border-t border-border/50">
+        <div className="max-w-4xl mx-auto px-4 py-3 text-center text-xs text-muted-foreground">
+          Copyright © 2026 — Tejus Bhasin — Sole Proprietorship
+        </div>
+      </div>
     </footer>
   );
 }

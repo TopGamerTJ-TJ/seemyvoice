@@ -33,17 +33,31 @@ export default function SignAsset({ sign, active, videoUrl, speed = 1, signLangu
       return;
     }
     setLetterIdx(0);
-    const letterDuration = 800 / speed;
-    const interval = setInterval(() => {
-      setLetterIdx((prev) => {
-        if (prev >= sign.word.length - 1) {
-          clearInterval(interval);
-          return prev;
-        }
-        return prev + 1;
-      });
-    }, letterDuration);
-    return () => clearInterval(interval);
+
+    const letters = sign.word.split("");
+    const baseDuration = 800 / speed;
+    const extraPause = 500 / speed; // extra pause before a repeated letter
+    let cancelled = false;
+    const timeouts = [];
+
+    const scheduleNext = (idx) => {
+      if (cancelled || idx >= letters.length - 1) return;
+      const nextIdx = idx + 1;
+      const isDouble = letters[nextIdx] === letters[idx];
+      const delay = baseDuration + (isDouble ? extraPause : 0);
+      timeouts.push(setTimeout(() => {
+        if (cancelled) return;
+        setLetterIdx(nextIdx);
+        scheduleNext(nextIdx);
+      }, delay));
+    };
+
+    scheduleNext(0);
+
+    return () => {
+      cancelled = true;
+      timeouts.forEach(clearTimeout);
+    };
   }, [isFsFallback, active, speed, sign.word]);
 
   // Control the video element
@@ -91,14 +105,22 @@ export default function SignAsset({ sign, active, videoUrl, speed = 1, signLangu
   if (isFsFallback) {
     const letters = sign.word.split("");
     const currentLetter = (letters[letterIdx] || "").toUpperCase();
+    const isDoubleLetter = letterIdx > 0 && letters[letterIdx] === letters[letterIdx - 1];
     return (
       <div className="flex flex-col items-center justify-center w-full h-full text-center px-6 transition-opacity duration-300 opacity-100">
         <div className="flex-1 flex items-center justify-center w-full min-h-[200px]">
-          <AnimatedHand
-            motion="fingerspell"
-            label={currentLetter}
-            reducedMotion={settings.reducedMotion || !active}
-          />
+          <div className={`relative p-4 rounded-3xl transition-all duration-300 ${isDoubleLetter ? "ring-4 ring-blue-400/40" : "ring-0 ring-transparent"}`}>
+            <AnimatedHand
+              motion="fingerspell"
+              label={currentLetter}
+              reducedMotion={settings.reducedMotion || !active}
+            />
+            {isDoubleLetter && (
+              <span className="absolute -top-2 -right-2 text-xs font-bold text-white bg-blue-500 rounded-full w-7 h-7 flex items-center justify-center shadow-lg">
+                ×2
+              </span>
+            )}
+          </div>
         </div>
         <div className="mt-2">
           <h3 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight mb-1">
@@ -109,8 +131,8 @@ export default function SignAsset({ sign, active, videoUrl, speed = 1, signLangu
           </p>
         </div>
         <div className="mt-3 inline-flex items-center gap-2 text-[11px] text-muted-foreground/70 bg-muted px-3 py-1.5 rounded-full">
-          <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-          No ASL video found — fingerspelling
+          <span className={`w-1.5 h-1.5 rounded-full ${isDoubleLetter ? "bg-blue-500" : "bg-amber-500"}`} />
+          {isDoubleLetter ? "Double letter — repeat sign" : "No ASL video found — fingerspelling"}
         </div>
       </div>
     );
