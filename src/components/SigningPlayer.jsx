@@ -2,13 +2,14 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Play, Pause, RotateCcw, ChevronLeft } from "lucide-react";
 import SignAsset from "@/components/SignAsset";
 import { useSettings } from "@/components/SettingsContext";
+import { useSignVideos } from "@/hooks/useSignVideos";
 
 /**
- * SigningPlayer — plays a sequence of local sign assets in order.
+ * SigningPlayer — plays a sequence of signs in order.
  *
- * Props:
- *   signSequence — array of sign items from translateToASL()
- *   onNewTranslation — callback for "Translate Something Else"
+ * Signs with a real ASL video (from SignASL.org) play the video and
+ * advance on onEnded. Signs without a video use the animated hand
+ * with a timed duration.
  */
 export default function SigningPlayer({ signSequence, onNewTranslation }) {
   const { settings, updateSetting } = useSettings();
@@ -19,6 +20,12 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
   const speed = settings.signingSpeed;
   const currentSign = signSequence[currentIndex];
   const isLast = currentIndex >= signSequence.length - 1;
+
+  // Fetch real ASL video URLs for all signs in parallel
+  const videoUrls = useSignVideos(signSequence);
+  const currentVideoUrl = videoUrls[currentIndex];
+  const hasVideo = Boolean(currentVideoUrl) && !currentSign?.fingerspelled;
+  const videoLoading = currentVideoUrl === undefined && !currentSign?.fingerspelled;
 
   const clearTimer = useCallback(() => {
     if (timeoutRef.current) {
@@ -37,11 +44,15 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
     });
   }, [signSequence.length]);
 
-  // Auto-advance timer — let each sign play its full duration, then advance
-  // or stop after the last sign.
+  // Timer — only for signs without a video (animated hand fallback).
+  // Wait for video URL resolution before starting the timer so we don't
+  // skip a sign whose video is still loading.
   useEffect(() => {
     clearTimer();
     if (!isPlaying || !currentSign) return;
+    if (hasVideo) return; // video's onEnded handles advancement
+    if (videoLoading) return; // wait for video URL to resolve
+
     const duration = currentSign.duration / speed;
     timeoutRef.current = setTimeout(() => {
       if (!isLast) {
@@ -51,11 +62,18 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
       }
     }, duration);
     return clearTimer;
-  }, [isPlaying, currentIndex, currentSign, speed, isLast, advance, clearTimer]);
+  }, [isPlaying, currentIndex, currentSign, speed, isLast, advance, clearTimer, hasVideo, videoLoading]);
+
+  const handleVideoEnded = useCallback(() => {
+    if (!isLast) {
+      advance();
+    } else {
+      setIsPlaying(false);
+    }
+  }, [isLast, advance]);
 
   const handlePlay = () => {
     if (isLast && !isPlaying) {
-      // Replay from start if at the end
       setCurrentIndex(0);
       setIsPlaying(true);
     } else {
@@ -95,7 +113,14 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
     <div className="flex flex-col w-full">
       {/* Signing display area */}
       <div className="relative w-full aspect-[4/3] sm:aspect-video rounded-3xl bg-gradient-to-b from-muted/50 to-muted overflow-hidden border border-border">
-        <SignAsset sign={currentSign} active={isPlaying} />
+        <SignAsset
+          key={currentIndex}
+          sign={currentSign}
+          active={isPlaying}
+          videoUrl={currentVideoUrl}
+          speed={speed}
+          onVideoEnded={handleVideoEnded}
+        />
 
         {/* Progress indicators */}
         <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/40 to-transparent">
