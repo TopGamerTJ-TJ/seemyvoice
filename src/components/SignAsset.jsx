@@ -143,11 +143,15 @@ export default function SignAsset({ sign, active, videoUrl, speed = 1, onVideoEn
       }`}
     >
       <div className="flex-1 flex items-center justify-center w-full min-h-[200px]">
-        <AnimatedHand
-          motion={motionType}
-          label={sign.gloss}
-          reducedMotion={settings.reducedMotion || !active}
-        />
+        {isLoading ? (
+          <div className="w-10 h-10 border-4 border-muted border-t-foreground rounded-full animate-spin" />
+        ) : (
+          <AnimatedHand
+            motion={motionType}
+            label={sign.gloss}
+            reducedMotion={settings.reducedMotion || !active}
+          />
+        )}
       </div>
 
       <div className="mt-2">
