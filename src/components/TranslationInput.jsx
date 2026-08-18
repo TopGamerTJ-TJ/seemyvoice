@@ -1,6 +1,6 @@
 import React from "react";
 
-const MAX_LENGTH = 500;
+const MAX_LENGTH = 20000;
 
 const EXAMPLE_PHRASES = [
   "Hello",
