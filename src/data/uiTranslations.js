@@ -59,6 +59,7 @@ const en = {
   fingerspellingFallbackDesc: "Spell unknown words letter by letter",
   wordsTranslated: "words translated",
   users: "users",
+  peopleWhoSign: "people who sign",
   terms: "Terms",
   privacy: "Privacy",
   preparing: "Preparing your translation...",

@@ -18,13 +18,19 @@ import { SIGN_LANGUAGES } from "@/data/signLanguages";
 export default function HomeShowcase({ stats }) {
   const { t } = useI18n();
   const words = (stats?.totalWords ?? 0).toLocaleString();
-  const visitors = (stats?.totalVisitors ?? 0).toLocaleString();
   const langCount = SIGN_LANGUAGES.length;
+  const totalSigners = SIGN_LANGUAGES.reduce((sum, l) => sum + (l.speakers || 0), 0);
+  const signersDisplay =
+    totalSigners >= 1_000_000
+      ? `${(totalSigners / 1_000_000).toFixed(1).replace(/\.0$/, "")}M`
+      : totalSigners >= 1_000
+      ? `${Math.round(totalSigners / 1_000)}K`
+      : `${totalSigners}`;
 
   const statCards = [
     { value: words, label: t("wordsTranslated"), icon: BookOpen, gradient: "from-sky-500 to-cyan-500" },
     { value: langCount, label: t("languagesSupported"), icon: Languages, gradient: "from-cyan-500 to-emerald-500" },
-    { value: visitors, label: t("users"), icon: Users, gradient: "from-violet-400 to-sky-400" },
+    { value: signersDisplay, label: t("peopleWhoSign"), icon: Users, gradient: "from-violet-400 to-sky-400" },
   ];
 
   const steps = [

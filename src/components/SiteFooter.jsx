@@ -8,7 +8,6 @@ import { useI18n } from "@/components/I18nContext";
 export default function SiteFooter({ stats }) {
   const { t } = useI18n();
   const words = (stats?.totalWords ?? 0).toLocaleString();
-  const visitors = (stats?.totalVisitors ?? 0).toLocaleString();
 
   return (
     <footer className="border-t border-border bg-muted/30">
@@ -17,10 +16,6 @@ export default function SiteFooter({ stats }) {
           <div className="flex items-center gap-1.5">
             <span className="font-semibold text-foreground tabular-nums">{words}</span>
             <span className="text-muted-foreground">{t("wordsTranslated")}</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="font-semibold text-foreground tabular-nums">{visitors}</span>
-            <span className="text-muted-foreground">{t("users")}</span>
           </div>
         </div>
 
