@@ -35,8 +35,8 @@ export default function TranslationInput({ text, setText, onTranslate, disabled 
     <div className="w-full max-w-2xl mx-auto">
       {/* Logo / Title */}
       <div className="text-center mb-6">
-        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight font-serif mb-3 bg-gradient-to-r from-sky-500 via-cyan-500 to-emerald-500 bg-clip-text text-transparent">
-          SeeMy<span className="italic">Voice</span>
+        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-3 bg-gradient-to-r from-sky-500 via-cyan-500 to-emerald-500 bg-clip-text text-transparent" style={{ fontFamily: '"Times New Roman", Times, serif' }}>
+          See<span className="italic">My</span>Voice
         </h1>
         <p className="text-lg sm:text-xl text-muted-foreground">
           {t("tagline")}
