@@ -94,11 +94,7 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
     <div className="flex flex-col w-full">
       {/* Signing display area */}
       <div className="relative w-full aspect-[4/3] sm:aspect-video rounded-3xl bg-gradient-to-b from-muted/50 to-muted overflow-hidden border border-border">
-        <SignAsset
-          sign={currentSign}
-          active={isPlaying}
-          reducedMotion={settings.reducedMotion}
-        />
+        <SignAsset sign={currentSign} active={isPlaying} />
 
         {/* Progress indicators */}
         <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/40 to-transparent">

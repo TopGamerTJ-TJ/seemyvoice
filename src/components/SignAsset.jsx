@@ -1,20 +1,26 @@
 import React from "react";
-import { Hand } from "lucide-react";
+import AnimatedHand from "@/components/AnimatedHand";
+import { getMotion } from "@/data/signMotions";
+import { useSettings } from "@/components/SettingsContext";
 
 /**
- * SignAsset — renders a single sign's asset.
+ * SignAsset — renders a single sign's animated visual.
  *
  * Supports:
- *   - placeholder: clearly-labeled animated placeholder (no fabricated ASL)
+ *   - placeholder: stylized animated hand (illustrative, not verified ASL)
  *   - video: local MP4/WebM (future — set asset.type to 'video' and asset.src)
  *   - image: local animated image / GIF (future — set asset.type to 'image' and asset.src)
  *
- * The placeholder is intentionally honest: it shows the sign name, a description
- * of the actual handshape/motion, and a clear "placeholder" label. It does NOT
- * fabricate hand movements and call them ASL.
+ * The animated hand is clearly labeled as an illustrative placeholder —
+ * it conveys the general motion direction, NOT authentic ASL signing.
  */
-export default function SignAsset({ sign, active, reducedMotion }) {
+export default function SignAsset({ sign, active }) {
+  const { settings } = useSettings();
   const { asset } = sign;
+
+  // Fingerspelled letters use the letter display
+  const isFingerspelled = sign.fingerspelled;
+  const motionType = isFingerspelled ? "fingerspell" : getMotion(sign.signId);
 
   if (asset.type === "video" && asset.src) {
     return (
@@ -39,47 +45,43 @@ export default function SignAsset({ sign, active, reducedMotion }) {
     );
   }
 
-  // Placeholder — honest, clearly labeled
-  const isFingerspelled = sign.fingerspelled;
+  // Animated placeholder — stylized hand with real motion
   return (
     <div
-      className={`flex flex-col items-center justify-center w-full h-full text-center px-6 transition-all duration-500 ${
-        active ? "opacity-100 scale-100" : "opacity-60 scale-95"
+      className={`flex flex-col items-center justify-center w-full h-full text-center px-6 transition-opacity duration-300 ${
+        active ? "opacity-100" : "opacity-50"
       }`}
     >
-      <div
-        className={`relative flex items-center justify-center w-28 h-28 sm:w-36 sm:h-36 mb-6 rounded-full bg-primary/10 ${
-          !reducedMotion && active ? "animate-pulse-slow" : ""
-        }`}
-      >
-        <Hand
-          className="w-12 h-12 sm:w-16 sm:h-16 text-primary"
-          strokeWidth={1.5}
+      {/* The animated hand */}
+      <div className="flex-1 flex items-center justify-center w-full min-h-[200px]">
+        <AnimatedHand
+          motion={motionType}
+          label={sign.gloss}
+          reducedMotion={settings.reducedMotion || !active}
         />
+      </div>
+
+      {/* Sign label */}
+      <div className="mt-2">
+        <h3 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight mb-1">
+          {sign.gloss}
+        </h3>
+        {asset.label && !isFingerspelled && (
+          <p className="text-xs text-muted-foreground uppercase tracking-widest">
+            {asset.label}
+          </p>
+        )}
         {isFingerspelled && (
-          <span className="absolute -top-2 -right-2 bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">
-            Fingerspell
-          </span>
+          <p className="text-xs text-amber-600 dark:text-amber-400 uppercase tracking-widest font-semibold">
+            Fingerspelling
+          </p>
         )}
       </div>
 
-      <h3 className="text-3xl sm:text-5xl font-bold text-foreground tracking-tight mb-3">
-        {sign.gloss}
-      </h3>
-
-      {asset.label && (
-        <p className="text-sm text-muted-foreground uppercase tracking-widest mb-3">
-          {asset.label}
-        </p>
-      )}
-
-      <p className="text-sm sm:text-base text-muted-foreground max-w-md leading-relaxed">
-        {asset.description}
-      </p>
-
-      <div className="mt-6 inline-flex items-center gap-2 text-xs text-muted-foreground/70 bg-muted px-3 py-1.5 rounded-full">
+      {/* Honest placeholder label */}
+      <div className="mt-3 inline-flex items-center gap-2 text-[11px] text-muted-foreground/70 bg-muted px-3 py-1.5 rounded-full">
         <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-        Placeholder — verified sign video to be added
+        Illustrative animation — not verified ASL footage
       </div>
     </div>
   );
