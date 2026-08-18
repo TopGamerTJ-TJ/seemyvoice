@@ -179,25 +179,18 @@ export function translateToASL(text, options = {}) {
       // Skip stopwords entirely
       if (stopwords.has(word)) continue;
 
-      const signId = termToSign[word];
-      if (signId) {
-        const item = signItem(signId);
-        if (item) signSequence.push(item);
-      } else {
-        // Try a whole-word ASL video lookup (SignASL.org) before fingerspelling.
-        // If no video is found, fall back to letter-by-letter fingerspelling
-        // at render time.
-        signSequence.push({
-          signId: `VL-${word}`,
-          gloss: word.charAt(0).toUpperCase() + word.slice(1),
-          asset: { type: "video_lookup", label: word },
-          duration: 2000,
-          fingerspelled: false,
-          word,
-          videoLookup: true,
-          allowFingerspellingFallback: fingerspellingFallback,
-        });
-      }
+      // Every word uses whole-word ASL video lookup (SignASL.org).
+      // If no video is found, fall back to letter-by-letter fingerspelling.
+      signSequence.push({
+        signId: `VL-${word}`,
+        gloss: word.charAt(0).toUpperCase() + word.slice(1),
+        asset: { type: "video_lookup", label: word },
+        duration: 2000,
+        fingerspelled: false,
+        word,
+        videoLookup: true,
+        allowFingerspellingFallback: fingerspellingFallback,
+      });
     }
   }
 
