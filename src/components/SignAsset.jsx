@@ -12,7 +12,7 @@ import { getSignLanguage } from "@/data/signLanguages";
  *   2. For video-lookup signs with no video: letter-by-letter fingerspelling
  *   3. Stylized AnimatedHand fallback (dictionary signs, loading state)
  */
-export default function SignAsset({ sign, active, videoUrl, speed = 1, signLanguage = "asl", onVideoEnded }) {
+export default function SignAsset({ sign, active, videoUrl, speed = 1, signLanguage = "asl", onVideoEnded, loop = false, isFullscreen = false }) {
   const { settings } = useSettings();
   const langInfo = getSignLanguage(signLanguage);
   const videoRef = useRef(null);
@@ -35,8 +35,8 @@ export default function SignAsset({ sign, active, videoUrl, speed = 1, signLangu
     setLetterIdx(0);
 
     const letters = sign.word.split("");
-    const baseDuration = 800 / speed;
-    const extraPause = 500 / speed; // extra pause before a repeated letter
+    const baseDuration = 1200 / speed;
+    const extraPause = 800 / speed; // extra pause before a repeated letter
     let cancelled = false;
     const timeouts = [];
 
@@ -83,9 +83,10 @@ export default function SignAsset({ sign, active, videoUrl, speed = 1, signLangu
             src={videoUrl}
             muted
             playsInline
+            loop={loop}
             referrerPolicy="no-referrer"
             onEnded={onVideoEnded}
-            className="max-w-full max-h-[320px] rounded-2xl"
+            className={`max-w-full rounded-2xl ${isFullscreen ? "max-h-[85vh]" : "max-h-[320px]"}`}
           />
         </div>
         <div className="mt-2">
@@ -111,6 +112,7 @@ export default function SignAsset({ sign, active, videoUrl, speed = 1, signLangu
         <div className="flex-1 flex items-center justify-center w-full min-h-[200px]">
           <div className={`relative p-4 rounded-3xl transition-all duration-300 ${isDoubleLetter ? "ring-4 ring-blue-400/40" : "ring-0 ring-transparent"}`}>
             <AnimatedHand
+              key={letterIdx}
               motion="fingerspell"
               label={currentLetter}
               reducedMotion={settings.reducedMotion || !active}

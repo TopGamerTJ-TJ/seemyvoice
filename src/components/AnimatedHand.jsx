@@ -88,8 +88,9 @@ export default function AnimatedHand({ motion: motionType = "wave", label, reduc
     return (
       <div className="flex items-center justify-center w-full h-full">
         <motion.div
-          animate={reducedMotion ? {} : { scale: [0.8, 1.1, 1] }}
-          transition={reducedMotion ? {} : { duration: 0.8, repeat: Infinity, repeatDelay: 0.3 }}
+          initial={reducedMotion ? false : { opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={reducedMotion ? { duration: 0 } : { duration: 0.35, ease: "easeOut" }}
           className="text-7xl sm:text-9xl font-bold text-primary"
         >
           {label}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { Play, Pause, RotateCcw, ChevronLeft } from "lucide-react";
+import { Play, Pause, RotateCcw, ChevronLeft, Maximize, Minimize, Repeat } from "lucide-react";
 import SignAsset from "@/components/SignAsset";
 import { useSettings } from "@/components/SettingsContext";
 import { useSignVideos } from "@/hooks/useSignVideos";
@@ -15,7 +15,10 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
   const { settings, updateSetting } = useSettings();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isLooping, setIsLooping] = useState(false);
   const timeoutRef = useRef(null);
+  const containerRef = useRef(null);
 
   const speed = settings.signingSpeed;
   const signLanguage = settings.signLanguage || "asl";
@@ -63,7 +66,7 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
       for (let i = 1; i < word.length; i++) {
         if (word[i] === word[i - 1]) doubleCount++;
       }
-      duration = (800 * word.length + 500 * doubleCount) / speed;
+      duration = (1200 * word.length + 800 * doubleCount) / speed;
     } else if (isNoVideo) {
       duration = 1500 / speed;
     } else {
@@ -107,6 +110,24 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
     setIsPlaying(true);
   };
 
+  useEffect(() => {
+    const handleChange = () => setIsFullscreen(Boolean(document.fullscreenElement));
+    document.addEventListener("fullscreenchange", handleChange);
+    return () => document.removeEventListener("fullscreenchange", handleChange);
+  }, []);
+
+  const toggleFullscreen = useCallback(() => {
+    if (!document.fullscreenElement) {
+      containerRef.current?.requestFullscreen?.().catch(() => {});
+    } else {
+      document.exitFullscreen?.().catch(() => {});
+    }
+  }, []);
+
+  const toggleLoop = useCallback(() => {
+    setIsLooping((prev) => !prev);
+  }, []);
+
   if (!currentSign) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] text-center">
@@ -127,7 +148,14 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
   return (
     <div className="flex flex-col w-full">
       {/* Signing display area */}
-      <div className="relative w-full aspect-[4/3] sm:aspect-video rounded-3xl bg-gradient-to-b from-muted/50 to-muted overflow-hidden border border-border">
+      <div
+        ref={containerRef}
+        className={`relative w-full overflow-hidden ${
+          isFullscreen
+            ? "h-screen bg-black flex items-center justify-center"
+            : "aspect-[4/3] sm:aspect-video rounded-3xl bg-gradient-to-b from-muted/50 to-muted border border-border"
+        }`}
+      >
         <SignAsset
           key={currentIndex}
           sign={currentSign}
@@ -136,7 +164,60 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
           speed={speed}
           signLanguage={signLanguage}
           onVideoEnded={handleVideoEnded}
+          loop={isLooping}
+          isFullscreen={isFullscreen}
         />
+
+        {/* Fullscreen toggle */}
+        <button
+          onClick={toggleFullscreen}
+          aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+          className="absolute top-3 right-3 p-2 rounded-full bg-black/40 text-white hover:bg-black/60 transition-colors z-10"
+        >
+          {isFullscreen ? <Minimize className="w-5 h-5" /> : <Maximize className="w-5 h-5" />}
+        </button>
+
+        {/* Fullscreen-only controls (bottom right) */}
+        {isFullscreen && (
+          <div className="absolute bottom-16 right-4 flex items-center gap-2 z-10">
+            {!isPlaying ? (
+              <button
+                onClick={handlePlay}
+                aria-label="Play"
+                className="p-3 rounded-full bg-white/90 text-black hover:bg-white transition-colors"
+              >
+                <Play className="w-5 h-5 fill-current" />
+              </button>
+            ) : (
+              <button
+                onClick={handlePause}
+                aria-label="Pause"
+                className="p-3 rounded-full bg-white/90 text-black hover:bg-white transition-colors"
+              >
+                <Pause className="w-5 h-5 fill-current" />
+              </button>
+            )}
+            <button
+              onClick={handleReplay}
+              aria-label="Replay"
+              className="p-3 rounded-full bg-white/90 text-black hover:bg-white transition-colors"
+            >
+              <RotateCcw className="w-5 h-5" />
+            </button>
+            <button
+              onClick={toggleLoop}
+              aria-pressed={isLooping}
+              aria-label="Toggle loop"
+              className={`p-3 rounded-full transition-colors ${
+                isLooping
+                  ? "bg-blue-500 text-white"
+                  : "bg-white/90 text-black hover:bg-white"
+              }`}
+            >
+              <Repeat className="w-5 h-5" />
+            </button>
+          </div>
+        )}
 
         {/* Progress indicators */}
         <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/40 to-transparent">

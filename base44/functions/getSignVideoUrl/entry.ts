@@ -24,6 +24,9 @@ export default async function(req) {
     if (signLanguage === "bsl") {
       pageUrl = `https://www.signbsl.com/sign/${slug}`;
       sourceName = "signbsl.com";
+    } else if (signLanguage === "auslan") {
+      pageUrl = `https://auslan.org.au/dictionary/search/?query=${encodeURIComponent(word.toLowerCase().trim())}`;
+      sourceName = "auslan.org.au";
     } else {
       pageUrl = `https://www.signasl.org/sign/${slug}`;
       sourceName = "signasl.org";
