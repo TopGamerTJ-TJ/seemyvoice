@@ -14,7 +14,7 @@ export default function SignLanguageSelector() {
       <span className="text-sm font-medium text-muted-foreground">
         Target sign language
       </span>
-      <div className="flex items-center gap-2 p-1 rounded-full bg-secondary">
+      <div className="flex flex-wrap items-center justify-center gap-2 p-1 rounded-2xl bg-secondary max-w-2xl">
         {SIGN_LANGUAGES.map((lang) => (
           <button
             key={lang.id}

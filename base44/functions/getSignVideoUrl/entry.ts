@@ -14,6 +14,28 @@
  *   dgs    — Spreadthesign.com / German Sign Language (two-step)
  *   lse    — Spreadthesign.com / Spanish Sign Language (two-step)
  *   lis    — Spreadthesign.com / Italian Sign Language (two-step)
+ *   jsl    — Spreadthesign.com / Japanese Sign Language (two-step)
+ *   csl    — Spreadthesign.com / Chinese Sign Language (two-step)
+ *   lgp    — Spreadthesign.com / Portuguese Sign Language (two-step)
+ *   ssl    — Spreadthesign.com / Swedish Sign Language (two-step)
+ *   pjm    — Spreadthesign.com / Polish Sign Language (two-step)
+ *   czsl   — Spreadthesign.com / Czech Sign Language (two-step)
+ *   dsl    — Spreadthesign.com / Danish Sign Language (two-step)
+ *   fsl    — Spreadthesign.com / Finnish Sign Language (two-step)
+ *   hrsl   — Spreadthesign.com / Croatian Sign Language (two-step)
+ *   sksl   — Spreadthesign.com / Slovak Sign Language (two-step)
+ *   srsl   — Spreadthesign.com / Serbian Sign Language (two-step)
+ *   usl    — Spreadthesign.com / Ukrainian Sign Language (two-step)
+ *   etsl   — Spreadthesign.com / Estonian Sign Language (two-step)
+ *   lsl    — Spreadthesign.com / Lithuanian Sign Language (two-step)
+ *   bgsl   — Spreadthesign.com / Bulgarian Sign Language (two-step)
+ *   gcs    — Spreadthesign.com / Greek Cypriot Sign Language (two-step)
+ *   nzsl   — Spreadthesign.com / New Zealand Sign Language (two-step)
+ *   lsa    — Spreadthesign.com / Argentine Sign Language (two-step)
+ *   lsch   — Spreadthesign.com / Chilean Sign Language (two-step)
+ *   ogs    — Spreadthesign.com / Austrian Sign Language (two-step)
+ *   psl    — Spreadthesign.com / Urdu Sign Language (two-step)
+ *   intl   — Spreadthesign.com / International Sign (two-step)
  */
 export default async function(req) {
   try {
@@ -36,10 +58,32 @@ export default async function(req) {
     // 1) search for the word to get its numeric ID
     // 2) fetch the word page in the target sign language to get the video
     const SPREADTHESIGN_LANGS = {
-      lsf: "fr.fr",  // French Sign Language (LSF)
-      dgs: "de.de",  // German Sign Language (DGS)
-      lse: "es.es",  // Spanish Sign Language (LSE)
-      lis: "it.it",  // Italian Sign Language (LIS)
+      lsf: "fr.fr",        // French Sign Language (LSF)
+      dgs: "de.de",        // German Sign Language (DGS)
+      lse: "es.es",        // Spanish Sign Language (LSE)
+      lis: "it.it",        // Italian Sign Language (LIS)
+      jsl: "ja.jp",        // Japanese Sign Language (JSL)
+      csl: "zh.hans.cn",   // Chinese Sign Language (CSL)
+      lgp: "pt.pt",        // Portuguese Sign Language (LGP)
+      ssl: "sv.se",        // Swedish Sign Language (SSL)
+      pjm: "pl.pl",        // Polish Sign Language (PJM)
+      czsl: "cs.cz",       // Czech Sign Language
+      dsl: "da.dk",        // Danish Sign Language
+      fsl: "fi.fi",        // Finnish Sign Language
+      hrsl: "hr.hr",       // Croatian Sign Language
+      sksl: "sk.sk",       // Slovak Sign Language
+      srsl: "sr.rs",       // Serbian Sign Language
+      usl: "uk.ua",        // Ukrainian Sign Language
+      etsl: "et.ee",       // Estonian Sign Language
+      lsl: "lt.lt",        // Lithuanian Sign Language
+      bgsl: "bg.bg",       // Bulgarian Sign Language
+      gcs: "el.cy",        // Greek Cypriot Sign Language
+      nzsl: "en.nz",       // New Zealand Sign Language
+      lsa: "es.ar",        // Argentine Sign Language
+      lsch: "es.cl",       // Chilean Sign Language
+      ogs: "de.at",        // Austrian Sign Language (ÖGS)
+      psl: "ur.pk",        // Urdu Sign Language
+      intl: "isl.intl",    // International Sign
     };
 
     const targetLang = SPREADTHESIGN_LANGS[signLanguage];
