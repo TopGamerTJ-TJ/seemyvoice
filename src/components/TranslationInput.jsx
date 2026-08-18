@@ -1,5 +1,4 @@
 import React from "react";
-import { Hand } from "lucide-react";
 
 const MAX_LENGTH = 500;
 
@@ -26,9 +25,6 @@ export default function TranslationInput({ text, setText, onTranslate, disabled 
     <div className="w-full max-w-2xl mx-auto">
       {/* Logo / Title */}
       <div className="text-center mb-10">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary mb-5">
-          <Hand className="w-8 h-8 text-primary-foreground" strokeWidth={2} />
-        </div>
         <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight mb-3">
           ASL Translate
         </h1>
