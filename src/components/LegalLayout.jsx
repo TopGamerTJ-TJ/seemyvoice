@@ -14,7 +14,7 @@ export default function LegalLayout({ title, lastUpdated, children }) {
           className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
         >
           <ChevronLeft className="w-4 h-4" />
-          Back to SL Now
+          Back to SeeMyVoice
         </Link>
 
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight font-heading mb-2">

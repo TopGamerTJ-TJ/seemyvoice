@@ -3,7 +3,7 @@ import { Heart } from "lucide-react";
 
 /**
  * PersonalStory — a short founder note from Tejus Bhasin explaining
- * why SL Now was built. Rendered on the homepage between the
+ * why SeeMyVoice was built. Rendered on the homepage between the
  * translation input and the stats showcase.
  */
 export default function PersonalStory() {
@@ -19,7 +19,7 @@ export default function PersonalStory() {
             <h3 className="text-lg font-bold text-foreground">A personal note from the maker</h3>
           </div>
           <p className="text-base sm:text-lg leading-relaxed text-foreground/90">
-            I'm Tejus Bhasin. I built SL Now because I saw, firsthand, that the
+            I'm Tejus Bhasin. I built SeeMyVoice because I saw, firsthand, that the
             people around me who are deaf or hard of hearing struggled to be
             understood — not because they couldn't communicate, but because so few
             people around them knew any sign language at all. The barrier was
@@ -28,7 +28,7 @@ export default function PersonalStory() {
             right from their phone, in their own language.
           </p>
           <p className="mt-4 text-sm font-medium text-muted-foreground">
-            — Tejus Bhasin, Creator of SL Now
+            — Tejus Bhasin, Creator of SeeMyVoice
           </p>
         </div>
       </div>

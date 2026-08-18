@@ -36,7 +36,7 @@ export default function TranslationInput({ text, setText, onTranslate, disabled 
       {/* Logo / Title */}
       <div className="text-center mb-6">
         <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight font-serif mb-3 bg-gradient-to-r from-sky-500 via-cyan-500 to-emerald-500 bg-clip-text text-transparent">
-          SL <span className="italic">Now</span>
+          SeeMy<span className="italic">Voice</span>
         </h1>
         <p className="text-lg sm:text-xl text-muted-foreground">
           {t("tagline")}
