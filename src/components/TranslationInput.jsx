@@ -1,6 +1,7 @@
 import React from "react";
 import SignLanguageSelector from "@/components/SignLanguageSelector";
 import { useSettings } from "@/components/SettingsContext";
+import { useI18n } from "@/components/I18nContext";
 import { getSignLanguage } from "@/data/signLanguages";
 
 const MAX_LENGTH = 20000;
@@ -27,6 +28,7 @@ const EXAMPLE_PHRASES = [
  */
 export default function TranslationInput({ text, setText, onTranslate, disabled }) {
   const { settings } = useSettings();
+  const { t } = useI18n();
   const langInfo = getSignLanguage(settings.signLanguage || "asl");
 
   return (
@@ -37,7 +39,7 @@ export default function TranslationInput({ text, setText, onTranslate, disabled 
           SL Now
         </h1>
         <p className="text-lg sm:text-xl text-muted-foreground">
-          Type in any language. See it in sign language.
+          {t("tagline")}
         </p>
       </div>
 
@@ -56,7 +58,7 @@ export default function TranslationInput({ text, setText, onTranslate, disabled 
               if (!disabled && text.trim()) onTranslate();
             }
           }}
-          placeholder="Type something you want to sign... (any language)"
+          placeholder={t("placeholder")}
           maxLength={MAX_LENGTH}
           aria-label="Text to translate to sign language"
           className="w-full min-h-[140px] sm:min-h-[160px] p-5 sm:p-6 text-lg rounded-3xl border border-border bg-card text-card-foreground placeholder:text-muted-foreground/60 resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all shadow-sm"
@@ -70,16 +72,16 @@ export default function TranslationInput({ text, setText, onTranslate, disabled 
       <button
         onClick={onTranslate}
         disabled={disabled || !text.trim()}
-        aria-label={`Translate to ${langInfo.name}`}
+        aria-label={`${t("translateTo")} ${langInfo.name}`}
         className="w-full mt-5 py-4 sm:py-5 rounded-2xl bg-primary text-primary-foreground text-lg font-semibold hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-lg shadow-primary/10 active:scale-[0.99]"
       >
-        Translate to {langInfo.shortName} →
+        {t("translateTo")} {langInfo.shortName} →
       </button>
 
       {/* Example phrases */}
       <div className="mt-8">
         <p className="text-sm font-medium text-muted-foreground mb-3 text-center">
-          Try an example
+          {t("tryExample")}
         </p>
         <div className="flex flex-wrap gap-2 justify-center">
           {EXAMPLE_PHRASES.map((phrase) => (

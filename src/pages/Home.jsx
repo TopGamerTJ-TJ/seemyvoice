@@ -9,6 +9,7 @@ import { translateToASL } from "@/utils/localTranslator";
 import { useSiteStats } from "@/hooks/useSiteStats";
 import SiteFooter from "@/components/SiteFooter";
 import SiteLanguageSelector from "@/components/SiteLanguageSelector";
+import { I18nProvider, useI18n } from "@/components/I18nContext";
 
 /**
  * Home — the main screen for SL Now.
@@ -19,6 +20,7 @@ import SiteLanguageSelector from "@/components/SiteLanguageSelector";
  */
 function HomeContent() {
   const { settings } = useSettings();
+  const { t } = useI18n();
   const { stats, trackTranslation } = useSiteStats();
   const [text, setText] = useState("");
   const [appState, setAppState] = useState("idle"); // idle | countdown | translating | result
@@ -101,7 +103,7 @@ function HomeContent() {
         {appState === "translating" && (
           <div className="flex-1 flex flex-col items-center justify-center px-4 py-12">
             <div className="w-10 h-10 border-4 border-muted border-t-foreground rounded-full animate-spin mb-4" />
-            <p className="text-muted-foreground">Translating to English…</p>
+            <p className="text-muted-foreground">{t("translatingTo")}</p>
           </div>
         )}
 
@@ -122,7 +124,9 @@ function HomeContent() {
 export default function Home() {
   return (
     <SettingsProvider>
-      <HomeContent />
+      <I18nProvider>
+        <HomeContent />
+      </I18nProvider>
     </SettingsProvider>
   );
 }

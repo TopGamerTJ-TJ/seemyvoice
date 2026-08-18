@@ -2,6 +2,7 @@ import React from "react";
 import { AlertCircle, Info } from "lucide-react";
 import SigningPlayer from "@/components/SigningPlayer";
 import { useSettings } from "@/components/SettingsContext";
+import { useI18n } from "@/components/I18nContext";
 import { getSignLanguage } from "@/data/signLanguages";
 
 /**
@@ -16,6 +17,7 @@ import { getSignLanguage } from "@/data/signLanguages";
  */
 export default function TranslationResult({ result, onNewTranslation }) {
   const { settings } = useSettings();
+  const { t } = useI18n();
   const { originalText, translatedText, sourceLanguage, wasTranslated, signSequence, unmatchedWords, usedFingerspelling, status } = result;
   const langInfo = getSignLanguage(settings.signLanguage || "asl");
 
@@ -27,19 +29,19 @@ export default function TranslationResult({ result, onNewTranslation }) {
           <AlertCircle className="w-8 h-8 text-amber-600 dark:text-amber-400" />
         </div>
         <h2 className="text-2xl font-bold text-foreground mb-3">
-          We couldn't find signs for this phrase yet.
+          {t("noSignsFound")}
         </h2>
         <p className="text-muted-foreground mb-2">
-          You typed: <span className="font-medium text-foreground">"{originalText}"</span>
+          {t("youTyped")}: <span className="font-medium text-foreground">"{originalText}"</span>
         </p>
         <p className="text-sm text-muted-foreground mb-8">
-          The local sign library may not include these words yet.
+          {t("libraryMissing")}
         </p>
         <button
           onClick={onNewTranslation}
           className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors"
         >
-          Try Another Phrase
+          {t("tryAnother")}
         </button>
       </div>
     );
@@ -50,12 +52,12 @@ export default function TranslationResult({ result, onNewTranslation }) {
       {/* Header */}
       <div className="text-center mb-8">
         <h1 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
-          {langInfo.name} Translation
+          {langInfo.name} {t("translation")}
         </h1>
         {wasTranslated ? (
           <>
             <p className="text-sm text-muted-foreground mt-2">
-              Translated from {sourceLanguage}
+              {t("translatedFrom")} {sourceLanguage}
             </p>
             <p className="text-muted-foreground mt-1 italic">
               "{originalText}"
@@ -82,7 +84,7 @@ export default function TranslationResult({ result, onNewTranslation }) {
         <div className="mt-8 p-6 rounded-2xl bg-secondary/50 border border-border">
           <div className="flex items-center gap-2 mb-3">
             <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">
-              Sign reference
+              {t("signReference")}
             </h3>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -110,14 +112,13 @@ export default function TranslationResult({ result, onNewTranslation }) {
                   key={idx}
                   className="px-3 py-1 rounded-lg bg-destructive/10 text-destructive text-sm font-medium border border-destructive/20"
                 >
-                  [{word} — sign unavailable]
+                  [{word} — {t("signUnavailable")}]
                 </span>
               ))}
             </div>
           )}
           <p className="text-xs text-muted-foreground mt-4 leading-relaxed">
-            This is a gloss reference for the sign sequence, not written sign language.
-            A gloss does not represent the full visual or grammatical content of sign language.
+            {t("glossNote")}
           </p>
         </div>
       )}
@@ -127,8 +128,7 @@ export default function TranslationResult({ result, onNewTranslation }) {
         <div className="mt-4 flex items-start gap-3 p-4 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
           <Info className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
           <p className="text-sm text-amber-800 dark:text-amber-200">
-            Some words are being <strong>fingerspelled</strong> letter by letter
-            because they don't have a dedicated sign in the local library yet.
+            {t("fingerspellingNotice")}
           </p>
         </div>
       )}
@@ -137,8 +137,7 @@ export default function TranslationResult({ result, onNewTranslation }) {
       <div className="mt-4 flex items-start gap-3 p-4 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
         <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
         <p className="text-sm text-blue-800 dark:text-blue-200">
-          This translation uses the app's local sign library. Signs shown as
-          placeholders will be replaced with verified signing assets as they become available.
+          {t("localLibraryNotice")}
         </p>
       </div>
     </div>

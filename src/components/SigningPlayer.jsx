@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Play, Pause, RotateCcw, ChevronLeft, Maximize, Minimize, Repeat } from "lucide-react";
 import SignAsset from "@/components/SignAsset";
 import { useSettings } from "@/components/SettingsContext";
+import { useI18n } from "@/components/I18nContext";
 import { useSignVideos } from "@/hooks/useSignVideos";
 
 /**
@@ -13,6 +14,7 @@ import { useSignVideos } from "@/hooks/useSignVideos";
  */
 export default function SigningPlayer({ signSequence, onNewTranslation }) {
   const { settings, updateSetting } = useSettings();
+  const { t } = useI18n();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -132,14 +134,14 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] text-center">
         <p className="text-lg text-muted-foreground mb-6">
-          No signs available to display.
+          {t("noSignsToDisplay")}
         </p>
         <button
           onClick={onNewTranslation}
           className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors"
         >
           <ChevronLeft className="w-5 h-5" />
-          Translate Something Else
+          {t("translateSomethingElse")}
         </button>
       </div>
     );
@@ -183,7 +185,7 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
             {!isPlaying ? (
               <button
                 onClick={handlePlay}
-                aria-label="Play"
+                aria-label={t("play")}
                 className="p-3 rounded-full bg-white/90 text-black hover:bg-white transition-colors"
               >
                 <Play className="w-5 h-5 fill-current" />
@@ -191,7 +193,7 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
             ) : (
               <button
                 onClick={handlePause}
-                aria-label="Pause"
+                aria-label={t("pause")}
                 className="p-3 rounded-full bg-white/90 text-black hover:bg-white transition-colors"
               >
                 <Pause className="w-5 h-5 fill-current" />
@@ -199,10 +201,10 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
             )}
             <button
               onClick={handleReplay}
-              aria-label="Replay"
+              aria-label={t("replay")}
               className="p-3 rounded-full bg-white/90 text-black hover:bg-white transition-colors"
-            >
-              <RotateCcw className="w-5 h-5" />
+              >
+                <RotateCcw className="w-5 h-5" />
             </button>
             <button
               onClick={toggleLoop}
@@ -237,10 +239,10 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
           </div>
           <div className="flex justify-between items-center text-xs text-white/90">
             <span>
-              Sign {currentIndex + 1} of {signSequence.length}
+              {t("signOf", { n: currentIndex + 1, total: signSequence.length })}
             </span>
             <span className="font-mono">
-              {currentSign.fingerspelled ? "Fingerspelling" : currentSign.gloss}
+              {currentSign.fingerspelled ? t("fingerspelling") : currentSign.gloss}
             </span>
           </div>
         </div>
@@ -252,29 +254,29 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
           {!isPlaying ? (
             <button
               onClick={handlePlay}
-              aria-label="Play"
+              aria-label={t("play")}
               className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors min-w-[110px] justify-center"
             >
               <Play className="w-5 h-5 fill-current" />
-              Play
+              {t("play")}
             </button>
           ) : (
             <button
               onClick={handlePause}
-              aria-label="Pause"
+              aria-label={t("pause")}
               className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors min-w-[110px] justify-center"
             >
               <Pause className="w-5 h-5 fill-current" />
-              Pause
+              {t("pause")}
             </button>
           )}
           <button
             onClick={handleReplay}
-            aria-label="Replay"
+            aria-label={t("replay")}
             className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-secondary text-secondary-foreground font-semibold hover:bg-secondary/80 transition-colors"
           >
             <RotateCcw className="w-5 h-5" />
-            Replay
+            {t("replay")}
           </button>
         </div>
 
@@ -304,7 +306,7 @@ export default function SigningPlayer({ signSequence, onNewTranslation }) {
           className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border text-foreground font-semibold hover:bg-secondary transition-colors"
         >
           <ChevronLeft className="w-5 h-5" />
-          Translate Something Else
+          {t("translateSomethingElse")}
         </button>
       </div>
     </div>

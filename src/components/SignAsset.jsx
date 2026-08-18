@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import AnimatedHand from "@/components/AnimatedHand";
 import { getMotion } from "@/data/signMotions";
 import { useSettings } from "@/components/SettingsContext";
+import { useI18n } from "@/components/I18nContext";
 import { getSignLanguage } from "@/data/signLanguages";
 
 /**
@@ -14,6 +15,7 @@ import { getSignLanguage } from "@/data/signLanguages";
  */
 export default function SignAsset({ sign, active, videoUrl, speed = 1, signLanguage = "asl", onVideoEnded, loop = false, isFullscreen = false }) {
   const { settings } = useSettings();
+  const { t } = useI18n();
   const langInfo = getSignLanguage(signLanguage);
   const videoRef = useRef(null);
 
@@ -96,7 +98,7 @@ export default function SignAsset({ sign, active, videoUrl, speed = 1, signLangu
         </div>
         <div className="mt-3 inline-flex items-center gap-2 text-[11px] text-muted-foreground/70 bg-muted px-3 py-1.5 rounded-full">
           <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-          Real {langInfo.shortName} video — {langInfo.source}
+          {t("realVideoLabel", { lang: langInfo.shortName })} — {langInfo.source}
         </div>
       </div>
     );
@@ -129,12 +131,12 @@ export default function SignAsset({ sign, active, videoUrl, speed = 1, signLangu
             {sign.gloss}
           </h3>
           <p className="text-xs text-amber-600 dark:text-amber-400 uppercase tracking-widest font-semibold">
-            Fingerspelling · {letterIdx + 1}/{letters.length}
+            {t("fingerspelling")} · {letterIdx + 1}/{letters.length}
           </p>
         </div>
         <div className="mt-3 inline-flex items-center gap-2 text-[11px] text-muted-foreground/70 bg-muted px-3 py-1.5 rounded-full">
           <span className={`w-1.5 h-1.5 rounded-full ${isDoubleLetter ? "bg-blue-500" : "bg-amber-500"}`} />
-          {isDoubleLetter ? "Double letter — repeat sign" : "No sign video found — fingerspelling"}
+          {isDoubleLetter ? t("doubleLetter") : t("fingerspellingFallbackLabel")}
         </div>
       </div>
     );
@@ -154,7 +156,7 @@ export default function SignAsset({ sign, active, videoUrl, speed = 1, signLangu
         </div>
         <div className="mt-3 inline-flex items-center gap-2 text-[11px] text-muted-foreground/70 bg-muted px-3 py-1.5 rounded-full">
           <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
-          No sign video available
+          {t("noVideoAvailable")}
         </div>
       </div>
     );
@@ -186,14 +188,14 @@ export default function SignAsset({ sign, active, videoUrl, speed = 1, signLangu
         </h3>
         {isFingerspelled && (
           <p className="text-xs text-amber-600 dark:text-amber-400 uppercase tracking-widest font-semibold">
-            Fingerspelling
+            {t("fingerspelling")}
           </p>
         )}
       </div>
 
       <div className="mt-3 inline-flex items-center gap-2 text-[11px] text-muted-foreground/70 bg-muted px-3 py-1.5 rounded-full">
         <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-        {isLoading ? "Loading sign video…" : "Illustrative animation — sign video unavailable"}
+        {isLoading ? t("loadingVideo") : t("illustrativeAnim")}
       </div>
     </div>
   );

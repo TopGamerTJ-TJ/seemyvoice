@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Settings as SettingsIcon, X, Gauge, Eye, Moon, Type, Hand } from "lucide-react";
 import { useSettings } from "@/components/SettingsContext";
+import { useI18n } from "@/components/I18nContext";
 
 const SPEEDS = [0.5, 0.75, 1, 1.25];
 
@@ -9,6 +10,7 @@ const SPEEDS = [0.5, 0.75, 1, 1.25];
  */
 export default function SettingsPanel() {
   const { settings, updateSetting, toggleSetting } = useSettings();
+  const { t } = useI18n();
   const [open, setOpen] = useState(false);
 
   return (
@@ -39,7 +41,7 @@ export default function SettingsPanel() {
         aria-label="Settings"
       >
         <div className="flex items-center justify-between p-5 border-b border-border sticky top-0 bg-card z-10">
-          <h2 className="text-xl font-bold text-foreground">Settings</h2>
+          <h2 className="text-xl font-bold text-foreground">{t("settings")}</h2>
           <button
             onClick={() => setOpen(false)}
             aria-label="Close settings"
@@ -55,7 +57,7 @@ export default function SettingsPanel() {
             <div className="flex items-center gap-2 mb-3">
               <Gauge className="w-4 h-4 text-muted-foreground" />
               <label className="text-sm font-semibold text-foreground">
-                Signing Speed
+                {t("signingSpeed")}
               </label>
             </div>
             <div className="flex gap-2">
@@ -79,8 +81,8 @@ export default function SettingsPanel() {
           {/* Reduced motion */}
           <ToggleRow
             icon={<Eye className="w-4 h-4" />}
-            label="Reduced Motion"
-            description="Simplify countdown and sign animations"
+            label={t("reducedMotion")}
+            description={t("reducedMotionDesc")}
             checked={settings.reducedMotion}
             onChange={() => toggleSetting("reducedMotion")}
           />
@@ -88,17 +90,17 @@ export default function SettingsPanel() {
           {/* Dark mode */}
           <ToggleRow
             icon={<Moon className="w-4 h-4" />}
-            label="Dark Mode"
-            description="Use a dark color theme"
+            label={t("darkMode")}
+            description={t("darkModeDesc")}
             checked={settings.darkMode}
             onChange={() => toggleSetting("darkMode")}
           />
 
-          {/* Show ASL gloss */}
+          {/* Show gloss */}
           <ToggleRow
             icon={<Type className="w-4 h-4" />}
-            label="Show ASL Gloss"
-            description="Display the ASL reference below the signer"
+            label={t("showGloss")}
+            description={t("showGlossDesc")}
             checked={settings.showGloss}
             onChange={() => toggleSetting("showGloss")}
           />
@@ -106,8 +108,8 @@ export default function SettingsPanel() {
           {/* Fingerspelling fallback */}
           <ToggleRow
             icon={<Hand className="w-4 h-4" />}
-            label="Fingerspelling Fallback"
-            description="Spell unknown words letter by letter"
+            label={t("fingerspellingFallback")}
+            description={t("fingerspellingFallbackDesc")}
             checked={settings.fingerspellingFallback}
             onChange={() => toggleSetting("fingerspellingFallback")}
           />

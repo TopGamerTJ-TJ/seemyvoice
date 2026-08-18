@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useI18n } from "@/components/I18nContext";
 
 /**
  * SiteFooter — Terms/Privacy links + live stats (words translated, users).
  */
 export default function SiteFooter({ stats }) {
+  const { t } = useI18n();
   const words = (stats?.totalWords ?? 0).toLocaleString();
   const visitors = (stats?.totalVisitors ?? 0).toLocaleString();
 
@@ -14,20 +16,20 @@ export default function SiteFooter({ stats }) {
         <div className="flex items-center gap-6 text-sm">
           <div className="flex items-center gap-1.5">
             <span className="font-semibold text-foreground tabular-nums">{words}</span>
-            <span className="text-muted-foreground">words translated</span>
+            <span className="text-muted-foreground">{t("wordsTranslated")}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="font-semibold text-foreground tabular-nums">{visitors}</span>
-            <span className="text-muted-foreground">users</span>
+            <span className="text-muted-foreground">{t("users")}</span>
           </div>
         </div>
 
         <div className="flex items-center gap-4 text-sm text-muted-foreground">
           <Link to="/terms" className="hover:text-foreground transition-colors">
-            Terms
+            {t("terms")}
           </Link>
           <Link to="/privacy" className="hover:text-foreground transition-colors">
-            Privacy
+            {t("privacy")}
           </Link>
         </div>
       </div>

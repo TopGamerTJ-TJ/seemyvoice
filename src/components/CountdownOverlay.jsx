@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSettings } from "@/components/SettingsContext";
+import { useI18n } from "@/components/I18nContext";
 
 /**
  * CountdownOverlay — full-screen 3-2-1 countdown.
@@ -10,6 +11,7 @@ import { useSettings } from "@/components/SettingsContext";
  */
 export default function CountdownOverlay({ onComplete }) {
   const { settings } = useSettings();
+  const { t } = useI18n();
   const [count, setCount] = useState(3);
   const [phase, setPhase] = useState("in"); // 'in' | 'hold' | 'out'
 
@@ -77,7 +79,7 @@ export default function CountdownOverlay({ onComplete }) {
         {count}
       </div>
       <p className="text-slate-400 text-base sm:text-lg mt-4 tracking-wide">
-        Preparing your ASL translation...
+        {t("preparing")}
       </p>
     </div>
   );
