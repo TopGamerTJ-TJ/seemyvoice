@@ -1,5 +1,4 @@
 import React from "react";
-import { Hand } from "lucide-react";
 import SignLanguageSelector from "@/components/SignLanguageSelector";
 import { useSettings } from "@/components/SettingsContext";
 import { useI18n } from "@/components/I18nContext";
@@ -36,14 +35,9 @@ export default function TranslationInput({ text, setText, onTranslate, disabled 
     <div className="w-full max-w-2xl mx-auto">
       {/* Logo / Title */}
       <div className="text-center mb-6">
-        <div className="flex items-center justify-center gap-3 mb-3">
-          <span className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-500 via-cyan-500 to-emerald-500 shadow-lg shadow-cyan-500/30">
-            <Hand className="w-6 h-6 text-white" />
-          </span>
-          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-sky-500 via-cyan-500 to-emerald-500 bg-clip-text text-transparent">
-            SL Now
-          </h1>
-        </div>
+        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight font-serif mb-3 bg-gradient-to-r from-sky-500 via-cyan-500 to-emerald-500 bg-clip-text text-transparent">
+          SL <span className="italic">Now</span>
+        </h1>
         <p className="text-lg sm:text-xl text-muted-foreground">
           {t("tagline")}
         </p>
