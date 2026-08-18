@@ -79,11 +79,11 @@ export default function TranslationInput({ text, setText, onTranslate, disabled 
       </button>
 
       {/* Example phrases */}
-      <div className="mt-8">
+      <div className="mt-8 flex flex-col items-center">
         <p className="text-sm font-medium text-muted-foreground mb-3 text-center">
           {t("tryExample")}
         </p>
-        <div className="flex flex-wrap gap-2 justify-center">
+        <div className="flex flex-wrap gap-2 justify-center max-w-2xl">
           {EXAMPLE_PHRASES.map((phrase) => (
             <button
               key={phrase}
